@@ -1,0 +1,14 @@
+packages:
+  - "api"
+  - "web"
+  - "app"
+  - "shared"
+
+allowBuilds:
+  "@nestjs/core": true
+  "@parcel/watcher": false
+  "@swc/core": true
+  esbuild: true
+  msgpackr-extract: true
+  sharp: true
+  unrs-resolver: true

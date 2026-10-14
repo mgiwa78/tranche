@@ -1,0 +1,27 @@
+{
+  "name": "tranche",
+  "private": true,
+  "description": "Tranche - buy now, pay later. Turborepo: NestJS API, Next.js merchant/admin dashboard, Expo customer app, shared types + Zod schemas.",
+  "packageManager": "pnpm@11.20.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --filter=api --filter=web",
+    "dev:app": "pnpm --filter app start",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:int": "turbo run test:int",
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml}\" --ignore-path .gitignore",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml}\" --ignore-path .gitignore",
+    "infra:up": "docker compose -f infra/docker/docker-compose.yml up -d postgres redis",
+    "infra:down": "docker compose -f infra/docker/docker-compose.yml down"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.1",
+    "turbo": "^2.5.8",
+    "typescript": "~5.9.3"
+  }
+}
