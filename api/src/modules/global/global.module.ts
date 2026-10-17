@@ -1,0 +1,15 @@
+import { Module } from "@nestjs/common";
+import { AuthController } from "./controllers/auth.controller";
+import { SystemController } from "./controllers/system.controller";
+import { NotificationController } from "./controllers/notification.controller";
+import { WebhookController } from "./controllers/webhook.controller";
+import { DevCheckoutController } from "./controllers/dev-checkout.controller";
+import { AuthService } from "./services/auth.service";
+
+/** Public + any-signed-in-user routes: auth, health, app config, notifications, webhooks. */
+@Module({
+  controllers: [AuthController, SystemController, NotificationController, WebhookController, DevCheckoutController],
+  providers: [AuthService],
+  exports: [AuthService],
+})
+export class GlobalModule {}

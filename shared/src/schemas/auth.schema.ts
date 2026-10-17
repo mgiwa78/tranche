@@ -13,8 +13,7 @@ export const phoneSchema = z
   .trim()
   .regex(/^\+?\d{10,14}$/, "Enter a valid phone number");
 
-const nameSchema = (label: string) =>
-  z.string().trim().min(1, `${label} is required`).max(60, `${label} is too long`);
+const nameSchema = (label: string) => z.string().trim().min(1, `${label} is required`).max(60, `${label} is too long`);
 
 export const registerCustomerSchema = z.object({
   firstName: nameSchema("First name"),
