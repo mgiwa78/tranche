@@ -16,6 +16,9 @@ import { Button, LargeTitle, Screen, Segmented, Spinner, TabHeader, Text } from 
 
 type Filter = 'active' | 'done';
 
+const INK_SOFT = 'rgba(11, 11, 16, 0.68)';
+const INK_FAINT = 'rgba(11, 11, 16, 0.5)';
+
 export default function PlansScreen() {
   const router = useRouter();
   const { colors } = useTheme();
@@ -54,40 +57,41 @@ export default function PlansScreen() {
       >
         <LargeTitle>Plans</LargeTitle>
 
-        <ThemeScope scheme="dark">
+        {/* The one lime surface in the app: what you owe next, on the brand colour. */}
+        <ThemeScope scheme="light">
           <View
             style={{
               marginHorizontal: gutter,
               marginBottom: 24,
               borderRadius: radius.panel,
-              backgroundColor: brand.navy,
+              backgroundColor: brand.lime,
               padding: 22,
             }}
           >
-            <Text variant="subhead" color="rgba(239,244,250,0.6)">
+            <Text variant="subhead" weight="medium" color={INK_SOFT}>
               {next ? 'Next payment' : 'You owe'}
             </Text>
-            <Text variant="display" color={brand.paper} tabular style={{ marginTop: 4 }}>
+            <Text variant="display" color={brand.ink} tabular style={{ marginTop: 4, fontSize: 40, lineHeight: 46 }}>
               {formatNaira(next ? next.amountKobo : summary.data?.outstandingKobo ?? 0)}
             </Text>
-            <Text variant="subhead" color={next?.status === 'overdue' ? '#F2B95A' : 'rgba(239,244,250,0.72)'} style={{ marginTop: 2 }}>
+            <Text variant="subhead" weight="medium" color={next?.status === 'overdue' ? '#8A1028' : INK_SOFT} style={{ marginTop: 2 }}>
               {next ? `${dueLabel(next.dueDate)} · ${next.merchantName ?? ''}` : 'Nothing due. Nice.'}
             </Text>
             {summary.data ? (
               <View style={{ flexDirection: 'row', marginTop: 20, gap: 24 }}>
                 <View>
-                  <Text variant="caption" color="rgba(239,244,250,0.55)">
+                  <Text variant="caption" color={INK_FAINT}>
                     Outstanding
                   </Text>
-                  <Text variant="callout" weight="semibold" color={brand.paper} tabular>
+                  <Text variant="callout" weight="semibold" color={brand.ink} tabular>
                     {formatNaira(summary.data.outstandingKobo)}
                   </Text>
                 </View>
                 <View>
-                  <Text variant="caption" color="rgba(239,244,250,0.55)">
+                  <Text variant="caption" color={INK_FAINT}>
                     Available
                   </Text>
-                  <Text variant="callout" weight="semibold" color={brand.paper} tabular>
+                  <Text variant="callout" weight="semibold" color={brand.ink} tabular>
                     {formatNaira(summary.data.availableCreditKobo)}
                   </Text>
                 </View>
@@ -96,7 +100,7 @@ export default function PlansScreen() {
             {next ? (
               <Button
                 label="Pay now"
-                variant="accent"
+                variant="primary"
                 size="md"
                 style={{ marginTop: 20 }}
                 onPress={() => router.push({ pathname: '/order/[id]', params: { id: next.orderId } })}

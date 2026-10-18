@@ -29,7 +29,7 @@ export default function Launch() {
 
   return (
     <ThemeScope scheme="dark">
-      <Screen style={{ backgroundColor: brand.navy }}>
+      <Screen style={{ backgroundColor: brand.ink }}>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Animated.View entering={FadeIn.duration(duration.slow).easing(easeOut)}>
             <BrandMark size={40} color={brand.paper} />

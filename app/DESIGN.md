@@ -4,26 +4,26 @@ Tranche should feel calm and exact: a shopper always knows what they owe, when, 
 
 ## Theme
 
-Both themes come from one token set.
+Both themes come from one token set: **electric lime on ink**.
 
-- **Light:** cool paper (`#F7FAFE`) with navy ink (`#071530`).
-- **Dark:** brand navy (`#030B1F` canvas, `#071533` raised).
+- **Dark (the brand):** ink canvas (`#0B0B10`), raised `#16161D`, paper text (`#F5F5F0`).
+- **Light:** warm off-white (`#FAFAF7`) with ink text.
 - Default is **Match system**. Users can pin Light or Dark in Account, Appearance.
-- **Brand moments stay navy in every mode** via `<ThemeScope scheme="dark">`: launch, onboarding, and the balance card at the top of Plans.
+- **Brand moments:** launch and onboarding are pinned ink via `<ThemeScope scheme="dark">`; the Plans "next payment" card is the one lime surface.
 
 ## Color
 
-Restrained. Neutrals are tinted toward navy. Tranche green (`accent`: `#0F7B5B` light, `#2BB784` dark) marks paid segments, selection, available credit and links. Warn amber marks overdue and failed payments; it never appears for anything the shopper hasn't missed.
+Lime (`#C8F531`) is a **fill**: primary emphasis, paid segments, the active tab, focus. It always carries ink text (`onAccent`). Lime fails contrast as text on light backgrounds, so accent text uses `accentInk` (olive `#4D6B00` in light, lime in dark). Violet (`#8B5CF6`) is the secondary accent for highlights and second chart series. Amber marks overdue and failed payments only.
 
 | Token | Use |
 |---|---|
 | `canvas` / `raised` / `sunken` | Screen, grouped lists and cards, inputs |
 | `fill` / `fillStrong` | Secondary buttons, icon tiles, unpaid segments |
-| `ink` / `ink2` / `ink3` / `ink4` | Text emphasis. `ink4` is below 4.5:1: placeholders and disabled only |
-| `accent` / `accentInk` / `accentWash` | Paid segment and selection / green text / selected plan and credit banner |
+| `ink` / `ink2` / `ink3` / `ink4` | Text emphasis. `ink4` is placeholders and disabled only |
+| `accent` / `onAccent` / `accentInk` / `accentWash` | Lime fill / ink on lime / accent text / selected plan and credit banner |
 | `danger` / `warn` / `success` | Destructive and declined, overdue, confirmation |
 
-Primary buttons are **ink-filled**. The green `accent` button is reserved for paying something that is overdue or failed, and for the onboarding call to action.
+Primary buttons are **ink-filled** in light mode and paper-filled in dark. The lime `accent` button is for the single most important action on a screen (onboarding, paying something overdue).
 
 ## Typography
 

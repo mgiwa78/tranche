@@ -24,7 +24,7 @@ async function ensureChannel() {
   await Notifications.setNotificationChannelAsync('payments', {
     name: 'Payments and reminders',
     importance: Notifications.AndroidImportance.HIGH,
-    lightColor: '#0F7B5B',
+    lightColor: '#C8F531',
   });
 }
 

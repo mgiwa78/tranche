@@ -10,7 +10,7 @@ const NAV = [
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-canvas">
+    <div className="theme-dark min-h-screen bg-canvas text-ink">
       <header className="sticky top-0 z-40 border-b border-border bg-canvas/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-8">
           <Link href="/" className="focus-ring rounded-control" aria-label="Tranche home">
@@ -32,7 +32,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             </Link>
             <Link
               href="/auth/register"
-              className="press focus-ring rounded-control bg-accent px-3.5 py-1.5 text-sm font-medium text-accent-contrast hover:bg-accent-hover"
+              className="press focus-ring rounded-full bg-accent px-4 py-1.5 text-sm font-semibold text-accent-contrast hover:bg-accent-hover"
             >
               Sell with Tranche
             </Link>

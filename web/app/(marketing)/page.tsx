@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { PlanCode, buildInstallmentSchedule, formatNaira, toKobo } from "@tranche/shared";
-import { LogoMark } from "@/components/brand/Logo";
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_STORE_URL ?? "https://expo.dev";
 
@@ -48,7 +47,14 @@ const FAQ = [
 
 function PhonePreview() {
   return (
-    <div className="relative mx-auto w-full max-w-[320px]">
+    <div className="relative isolate mx-auto w-full max-w-[320px]">
+      <div
+        aria-hidden="true"
+        className="absolute -inset-10 -z-10 rounded-full bg-[radial-gradient(closest-side,rgba(200,245,49,0.22),transparent)] blur-2xl"
+      />
+      <div className="absolute -right-8 -top-4 z-10 hidden rotate-[6deg] rounded-full bg-violet px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg sm:block">
+        Store paid in full ✓
+      </div>
       <div className="rounded-[36px] border border-border-strong bg-surface p-3 shadow-lg">
         <div className="rounded-[26px] bg-canvas px-5 pb-6 pt-7">
           <p className="text-xs text-faint">Lagos Gadget Hub</p>
@@ -80,7 +86,7 @@ function PhonePreview() {
               </li>
             ))}
           </ol>
-          <div className="mt-6 rounded-full bg-ink py-3 text-center text-sm font-semibold text-canvas">
+          <div className="mt-6 rounded-full bg-accent py-3 text-center text-sm font-semibold text-accent-contrast">
             Pay {formatNaira(EXAMPLE[0].amountKobo)} today
           </div>
         </div>
@@ -94,13 +100,20 @@ export default function HomePage() {
     <main>
       <section className="mx-auto grid max-w-6xl items-center gap-14 px-4 pb-20 pt-16 sm:px-8 lg:grid-cols-[1.1fr_1fr] lg:pt-24">
         <div>
-          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-border px-3 py-1 text-xs text-muted">
-            <LogoMark className="h-3 w-5" /> Interest-free, built for Nigeria
+          <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs text-muted">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent" /> Interest-free, built for Nigeria
           </p>
-          <h1 className="font-brand text-[2.6rem] font-medium leading-[1.05] tracking-[-0.035em] text-ink sm:text-6xl">
+          <h1 className="font-brand text-[2.9rem] font-semibold leading-[1.02] tracking-[-0.04em] text-ink sm:text-7xl">
             Get it today.
             <br />
-            Pay in four.
+            Pay in{" "}
+            <span className="relative ml-[0.1em] inline-block">
+              <span
+                aria-hidden="true"
+                className="absolute inset-x-[-0.12em] bottom-[0.02em] top-[0.18em] -rotate-1 rounded-[0.18em] bg-accent"
+              />
+              <span className="relative text-accent-contrast">four.</span>
+            </span>
           </h1>
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-muted">
             Split any purchase into four payments, two weeks apart. No interest, no paperwork, and a reminder before
@@ -109,13 +122,13 @@ export default function HomePage() {
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href={APP_URL}
-              className="press focus-ring rounded-control bg-accent px-5 py-3 text-sm font-medium text-accent-contrast hover:bg-accent-hover"
+              className="press focus-ring rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-contrast hover:bg-accent-hover"
             >
               Get the app
             </a>
             <Link
               href="/auth/register"
-              className="press focus-ring rounded-control border border-border-strong px-5 py-3 text-sm font-medium text-ink hover:bg-canvas-subtle"
+              className="press focus-ring rounded-full border border-border-strong px-6 py-3 text-sm font-semibold text-ink hover:bg-canvas-subtle"
             >
               I run a store
             </Link>
@@ -132,7 +145,9 @@ export default function HomePage() {
           <div className="ledger mt-10 grid-cols-1 md:grid-cols-3">
             {STEPS.map((s) => (
               <div key={s.n} className="p-6">
-                <span className="font-brand text-sm text-accent">{s.n}</span>
+                <span className="font-brand flex h-9 w-9 items-center justify-center rounded-full bg-accent text-sm font-semibold text-accent-contrast">
+                  {s.n}
+                </span>
                 <h3 className="mt-3 text-base font-medium text-ink">{s.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted">{s.body}</p>
               </div>
@@ -144,12 +159,17 @@ export default function HomePage() {
       <section id="merchants" className="border-t border-border bg-canvas-subtle">
         <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-8 lg:grid-cols-2">
           <div>
-            <h2 className="font-brand text-3xl font-medium tracking-tight text-ink">Paid in full. Upfront.</h2>
+            <h2 className="font-brand text-4xl font-semibold tracking-tight text-ink">
+              Paid in full. <span className="text-accent-ink">Upfront.</span>
+            </h2>
             <p className="mt-4 max-w-md text-muted">
               Offer installments without carrying the risk. Tranche pays you the whole order when the first payment
               clears, then collects from the shopper.
             </p>
-            <Link href="/auth/register" className="mt-6 inline-block text-sm font-medium text-accent hover:underline">
+            <Link
+              href="/auth/register"
+              className="mt-6 inline-block text-sm font-semibold text-accent-ink hover:underline"
+            >
               Create a merchant account →
             </Link>
           </div>
@@ -175,14 +195,14 @@ export default function HomePage() {
           <div className="ledger mt-10 grid-cols-1 md:grid-cols-2">
             <div className="p-6">
               <p className="text-sm text-muted">Shoppers</p>
-              <p className="font-brand mt-2 text-4xl font-medium text-ink">₦0 interest</p>
+              <p className="font-brand mt-2 text-5xl font-semibold text-accent-ink">₦0 interest</p>
               <p className="mt-3 text-sm text-muted">
                 A flat {formatNaira(toKobo(1_000))} late fee only if a payment is more than 3 days late.
               </p>
             </div>
             <div className="p-6">
               <p className="text-sm text-muted">Merchants</p>
-              <p className="font-brand mt-2 text-4xl font-medium text-ink">4.5% per order</p>
+              <p className="font-brand mt-2 text-5xl font-semibold text-violet">4.5% per order</p>
               <p className="mt-3 text-sm text-muted">No setup or monthly fees. Payouts to any Nigerian bank account.</p>
             </div>
           </div>
@@ -208,12 +228,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-t border-border bg-navy">
+      <section className="bg-lime">
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-4 py-16 sm:flex-row sm:items-center sm:px-8">
-          <h2 className="font-brand text-3xl font-medium tracking-tight text-white">Your next purchase, in four.</h2>
+          <h2 className="font-brand text-4xl font-semibold tracking-tight text-ink-brand">
+            Your next purchase, in four.
+          </h2>
           <a
             href={APP_URL}
-            className="press focus-ring rounded-control bg-white px-5 py-3 text-sm font-medium text-[#0A1B3D] hover:bg-white/90"
+            className="press focus-ring rounded-full bg-ink-brand px-6 py-3 text-sm font-semibold text-lime hover:opacity-90"
           >
             Get the app
           </a>

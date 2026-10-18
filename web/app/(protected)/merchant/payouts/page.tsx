@@ -73,7 +73,7 @@ export default function MerchantPayoutsPage() {
       {!hasBank && profile && (
         <p className="mb-6 text-sm text-muted">
           Add a settlement account in{" "}
-          <Link href="/merchant/settings" className="text-accent hover:underline">
+          <Link href="/merchant/settings" className="text-accent-ink hover:underline">
             Settings
           </Link>{" "}
           before requesting a payout.

@@ -14,8 +14,8 @@ type Props = {
 /** The Tranche mark: one bar in four segments, the first one paid. */
 export function BrandMark({ size = 28, wordmark = true, color }: Props) {
   const { colors } = useTheme();
-  const solid = color ?? colors.accent;
-  const soft = color ? `${color}66` : colors.fillStrong;
+  const solid = colors.accent;
+  const soft = color ? `${color}45` : colors.fillStrong;
   const width = Math.round(size * 1.6);
   return (
     <View

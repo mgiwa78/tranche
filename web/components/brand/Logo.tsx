@@ -3,8 +3,8 @@
  * "Own it now, pay in parts." Solid by default, or white for dark surfaces.
  */
 export function LogoMark({ className, tone = "brand" }: { className?: string; tone?: "brand" | "white" }) {
-  const solid = tone === "white" ? "#fff" : "var(--accent)";
-  const soft = tone === "white" ? "rgba(255,255,255,0.45)" : "var(--border-strong)";
+  const solid = "var(--accent)";
+  const soft = tone === "white" ? "rgba(245,245,240,0.3)" : "var(--border-strong)";
   return (
     <svg viewBox="0 0 40 24" fill="none" className={className} aria-hidden="true">
       <rect x="0" y="4" width="10" height="16" rx="3" fill={solid} />
@@ -19,7 +19,7 @@ export function LogoMark({ className, tone = "brand" }: { className?: string; to
 export function LogoTile({ className }: { className?: string }) {
   return (
     <span
-      className={["inline-flex items-center justify-center rounded-[22%] bg-accent", className]
+      className={["inline-flex items-center justify-center rounded-[22%] bg-ink-brand", className]
         .filter(Boolean)
         .join(" ")}
     >

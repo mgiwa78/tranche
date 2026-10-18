@@ -67,7 +67,7 @@ export function FloatingTabBar({ state, descriptors, navigation }: FloatingTabBa
           ...(isDark
             ? {}
             : Platform.select({
-                ios: { shadowColor: brand.navy, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.22, shadowRadius: 20 },
+                ios: { shadowColor: brand.ink, shadowOffset: { width: 0, height: 10 }, shadowOpacity: 0.22, shadowRadius: 20 },
                 android: { elevation: 10 },
               })),
         }}
@@ -75,7 +75,7 @@ export function FloatingTabBar({ state, descriptors, navigation }: FloatingTabBa
         {itemWidth > 0 ? (
           <Animated.View
             style={[
-              { position: 'absolute', top: 6, bottom: 6, left: 6, width: itemWidth, borderRadius: radius.pill, backgroundColor: 'rgba(239, 244, 250, 0.11)' },
+              { position: 'absolute', top: 6, bottom: 6, left: 6, width: itemWidth, borderRadius: radius.pill, backgroundColor: 'rgba(245, 245, 240, 0.11)' },
               pill,
             ]}
           />
@@ -85,7 +85,7 @@ export function FloatingTabBar({ state, descriptors, navigation }: FloatingTabBa
           const focused = state.index === index;
           const { options } = descriptors[route.key];
           const label = options.title ?? route.name;
-          const tint = focused ? brand.paper : 'rgba(239, 244, 250, 0.58)';
+          const tint = focused ? brand.lime : 'rgba(245, 245, 240, 0.58)';
           const badge = route.name === 'activity' && unread > 0 ? unread : 0;
 
           const onPress = () => {

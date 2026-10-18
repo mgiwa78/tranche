@@ -1,47 +1,49 @@
 @import "tailwindcss";
 
 /*
-  Design tokens, ported from neurapath/design/assets/tokens.css and re-branded for Tranche.
-  Neutral scale is OKLCH, navy-tinted (~258°) so grays never read as flat
-  gray. Brand-exact colors are pinned to hex, never derived.
+  Tranche design tokens: electric lime on ink.
+  Neutrals are OKLCH with a faint violet cast (hue 285) so blacks read as ink, not grey.
+  Lime is a FILL colour (buttons, paid segments, focus). On light backgrounds text that
+  needs the accent uses --accent-ink (deep olive) because lime fails contrast as text.
 */
 
 :root {
-  /* ---- Neutral scale (OKLCH, hue 258 = navy-tinted) ---- */
-  --n-0: oklch(99% 0.003 258);
-  --n-50: oklch(97.5% 0.006 258);
-  --n-100: oklch(94.5% 0.010 258);
-  --n-200: oklch(89% 0.014 258);
-  --n-300: oklch(80% 0.018 258);
-  --n-400: oklch(66% 0.022 258);
-  --n-500: oklch(53% 0.024 258);
-  --n-600: oklch(43% 0.026 258);
-  --n-700: oklch(33% 0.026 258);
-  --n-800: oklch(23% 0.024 258);
-  --n-850: oklch(19% 0.022 258);
-  --n-900: oklch(15.5% 0.020 258);
-  --n-950: oklch(11.5% 0.018 258);
+  /* ---- Neutral scale (OKLCH, hue 285 = ink) ---- */
+  --n-0: oklch(98.8% 0.004 100);
+  --n-50: oklch(97% 0.005 100);
+  --n-100: oklch(94% 0.006 100);
+  --n-200: oklch(90% 0.007 285);
+  --n-300: oklch(82% 0.009 285);
+  --n-400: oklch(66% 0.012 285);
+  --n-500: oklch(52% 0.014 285);
+  --n-600: oklch(41% 0.015 285);
+  --n-700: oklch(31% 0.015 285);
+  --n-800: oklch(23% 0.014 285);
+  --n-850: oklch(19% 0.013 285);
+  --n-900: oklch(15% 0.012 285);
+  --n-950: oklch(11% 0.01 285);
 
   /* ---- Brand-exact (pinned) ---- */
-  --brand-accent: #0F7B5B;
-  --brand-accent-hover: #0C6A4E;
-  --brand-accent-active: #095A42;
-  --brand-navy: #0A1B3D;
-  --brand-ink: #0D0D0D;
+  --brand-ink: #0b0b10;
+  --brand-lime: #c8f531;
+  --brand-lime-hover: #d6ff4d;
+  --brand-lime-active: #b4e01c;
+  --brand-violet: #8b5cf6;
+  --brand-paper: #f5f5f0;
 
   /* ---- Semantic status ---- */
-  --status-success: oklch(58% 0.14 152);
-  --status-success-bg-light: oklch(94% 0.05 152);
-  --status-success-bg-dark: oklch(27% 0.06 152);
-  --status-warning: oklch(72% 0.15 76);
-  --status-warning-bg-light: oklch(95% 0.06 76);
-  --status-warning-bg-dark: oklch(30% 0.07 76);
-  --status-danger: oklch(58% 0.20 25);
+  --status-success: oklch(64% 0.17 150);
+  --status-success-bg-light: oklch(95% 0.05 150);
+  --status-success-bg-dark: oklch(28% 0.06 150);
+  --status-warning: oklch(75% 0.16 70);
+  --status-warning-bg-light: oklch(95% 0.06 80);
+  --status-warning-bg-dark: oklch(30% 0.07 70);
+  --status-danger: oklch(62% 0.21 25);
   --status-danger-bg-light: oklch(94% 0.06 25);
   --status-danger-bg-dark: oklch(28% 0.08 25);
-  --status-info: oklch(55% 0.17 258);
-  --status-info-bg-light: oklch(94% 0.04 258);
-  --status-info-bg-dark: oklch(28% 0.07 258);
+  --status-info: var(--brand-violet);
+  --status-info-bg-light: oklch(95% 0.04 290);
+  --status-info-bg-dark: oklch(28% 0.08 290);
 
   /* ---- Motion ---- */
   --dur-fast: 120ms;
@@ -49,65 +51,71 @@
   --dur-slow: 260ms;
 
   /* ---- Light theme semantic mapping ---- */
-  --bg: var(--n-0);
+  --bg: #fafaf7;
   --bg-subtle: var(--n-50);
   --surface: #ffffff;
   --surface-raised: #ffffff;
-  --border: var(--n-200);
-  --border-strong: var(--n-300);
+  --border: oklch(91% 0.006 100);
+  --border-strong: oklch(84% 0.008 100);
   --text: var(--brand-ink);
   --text-muted: var(--n-500);
   --text-faint: var(--n-400);
-  --accent: var(--brand-accent);
-  --accent-hover: var(--brand-accent-hover);
-  --accent-active: var(--brand-accent-active);
-  --accent-contrast: #ffffff;
-  --ring: oklch(58% 0.14 160 / 0.45);
-  --shadow-color: 258 20% 30%;
+  --accent: var(--brand-lime);
+  --accent-hover: var(--brand-lime-hover);
+  --accent-active: var(--brand-lime-active);
+  --accent-contrast: var(--brand-ink);
+  --accent-ink: #4d6b00;
+  --violet: #7c3aed;
+  --ring: oklch(62% 0.2 128 / 0.55);
+  --shadow-color: 285 20% 20%;
   --status-success-bg: var(--status-success-bg-light);
   --status-warning-bg: var(--status-warning-bg-light);
   --status-danger-bg: var(--status-danger-bg-light);
   --status-info-bg: var(--status-info-bg-light);
 }
 
-:root[data-theme="dark"] {
-  --bg: var(--brand-navy);
-  --bg-subtle: oklch(14% 0.03 258);
-  --surface: oklch(16.5% 0.028 258);
-  --surface-raised: oklch(19.5% 0.026 258);
-  --border: oklch(28% 0.03 258);
-  --border-strong: oklch(36% 0.03 258);
-  --text: oklch(97% 0.006 258);
-  --text-muted: var(--n-400);
-  --text-faint: var(--n-600);
-  --accent: #2BB784;
-  --accent-hover: #56CB9F;
-  --accent-active: #1E9C6E;
-  --accent-contrast: #ffffff;
-  --ring: oklch(72% 0.14 160 / 0.5);
-  --shadow-color: 258 60% 3%;
+/* Dark: the ink theme. Also applied to any subtree with .theme-dark (the marketing site). */
+:root[data-theme="dark"],
+.theme-dark {
+  --bg: var(--brand-ink);
+  --bg-subtle: #111118;
+  --surface: #16161d;
+  --surface-raised: #1c1c25;
+  --border: #25252f;
+  --border-strong: #34343f;
+  --text: var(--brand-paper);
+  --text-muted: oklch(72% 0.012 285);
+  --text-faint: oklch(54% 0.014 285);
+  --accent: var(--brand-lime);
+  --accent-hover: var(--brand-lime-hover);
+  --accent-active: var(--brand-lime-active);
+  --accent-contrast: var(--brand-ink);
+  --accent-ink: var(--brand-lime);
+  --violet: #a78bfa;
+  --ring: oklch(90% 0.2 125 / 0.6);
+  --shadow-color: 285 60% 2%;
   --status-success-bg: var(--status-success-bg-dark);
   --status-warning-bg: var(--status-warning-bg-dark);
   --status-danger-bg: var(--status-danger-bg-dark);
   --status-info-bg: var(--status-info-bg-dark);
+  color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]):not([data-theme="dark"]) {
-    --bg: var(--brand-navy);
-    --bg-subtle: oklch(14% 0.03 258);
-    --surface: oklch(16.5% 0.028 258);
-    --surface-raised: oklch(19.5% 0.026 258);
-    --border: oklch(28% 0.03 258);
-    --border-strong: oklch(36% 0.03 258);
-    --text: oklch(97% 0.006 258);
-    --text-muted: var(--n-400);
-    --text-faint: var(--n-600);
-    --accent: #2BB784;
-    --accent-hover: #56CB9F;
-    --accent-active: #1E9C6E;
-    --ring: oklch(72% 0.14 160 / 0.5);
-    --shadow-color: 258 60% 3%;
+    --bg: var(--brand-ink);
+    --bg-subtle: #111118;
+    --surface: #16161d;
+    --surface-raised: #1c1c25;
+    --border: #25252f;
+    --border-strong: #34343f;
+    --text: var(--brand-paper);
+    --text-muted: oklch(72% 0.012 285);
+    --text-faint: oklch(54% 0.014 285);
+    --accent-ink: var(--brand-lime);
+    --violet: #a78bfa;
+    --ring: oklch(90% 0.2 125 / 0.6);
+    --shadow-color: 285 60% 2%;
     --status-success-bg: var(--status-success-bg-dark);
     --status-warning-bg: var(--status-warning-bg-dark);
     --status-danger-bg: var(--status-danger-bg-dark);
@@ -130,6 +138,8 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-active: var(--accent-active);
   --color-accent-contrast: var(--accent-contrast);
+  --color-accent-ink: var(--accent-ink);
+  --color-violet: var(--violet);
   --color-success: var(--status-success);
   --color-success-bg: var(--status-success-bg);
   --color-warning: var(--status-warning);
@@ -138,8 +148,8 @@
   --color-danger-bg: var(--status-danger-bg);
   --color-info: var(--status-info);
   --color-info-bg: var(--status-info-bg);
-  --color-navy: #0A1B3D;
-  --color-brand: #0F7B5B;
+  --color-ink-brand: #0b0b10;
+  --color-lime: #c8f531;
   --color-ink0: #0D0D0D;
 
   --radius-control: 6px;
@@ -226,7 +236,7 @@ dialog {
 }
 
 dialog::backdrop {
-  background: oklch(10% 0.02 258 / 0.55);
+  background: oklch(8% 0.01 285 / 0.6);
   backdrop-filter: blur(2px);
 }
 dialog[open] {

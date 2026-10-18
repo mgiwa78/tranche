@@ -16,11 +16,14 @@ export function LineChart({
   label,
   height = 120,
   format = (v: number) => v.toLocaleString("en-NG"),
+  tone = "accent",
 }: {
   points: ChartPoint[];
   label: string;
   height?: number;
   format?: (value: number) => string;
+  /** accent = lime (olive on light), violet = the second series colour. */
+  tone?: "accent" | "violet";
 }) {
   const gradientId = useId();
   const [active, setActive] = useState<number | null>(null);
@@ -46,7 +49,7 @@ export function LineChart({
       </figcaption>
       <svg
         viewBox={`0 0 ${width} ${height}`}
-        className="h-auto w-full text-accent"
+        className={["h-auto w-full", tone === "violet" ? "text-violet" : "text-accent-ink"].join(" ")}
         role="img"
         aria-label={`${label} over time`}
         onMouseLeave={() => setActive(null)}

@@ -10,8 +10,8 @@ Before writing UI code, read **`DESIGN.md`** (tokens, type, components, motion, 
 
 - **Build screens from `src/ui`.** Use `Text`, `Button`, `IconButton`, `ListGroup`/`ListRow`, `StackPage`, `NavBar`, `Avatar`, `Icon` and friends. Do not hand-roll buttons, rows, headers or colors.
 - **Colors come from `useTheme().colors`.** Never hardcode hex in screens. Fixed brand values are in `brand` (`src/theme/colors.ts`).
-- **Light and dark from one token set.** Appearance follows the system by default. Launch, onboarding and the Plans balance card are pinned navy with `<ThemeScope scheme="dark">`.
-- **Green is for money moving in the shopper's favour and selection,** not decoration. Primary buttons are ink-filled.
+- **Light and dark from one token set (lime on ink).** Appearance follows the system by default. Launch and onboarding are pinned ink with `<ThemeScope scheme="dark">`.
+- **Lime is a fill, never body text on light backgrounds** (use `accentInk`). It always carries ink text. Violet is the secondary highlight.
 - **Geist via `<Text variant>`.** Custom fonts ignore `fontWeight`; use the `weight` prop.
 - **Money is integer kobo** everywhere; render it with `formatNaira` from `@tranche/shared`. Never do float arithmetic on amounts.
 - **Schedules come from `buildInstallmentSchedule`** in `@tranche/shared`, the same function the api uses to create them. Don't recompute dates or splits in the app.

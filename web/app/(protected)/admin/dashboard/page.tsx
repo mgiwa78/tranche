@@ -39,7 +39,7 @@ export default function AdminDashboardPage() {
               <span className="flex-1 text-sm font-medium text-ink">
                 {pending ? `${pending} payout${pending === 1 ? "" : "s"} waiting for review` : "No payouts waiting"}
               </span>
-              <span className="text-sm text-muted transition-colors group-hover:text-accent">Review</span>
+              <span className="text-sm text-muted transition-colors group-hover:text-accent-ink">Review</span>
             </Link>
             <Link
               href="/admin/ledger"
@@ -62,7 +62,7 @@ export default function AdminDashboardPage() {
                   </span>
                 )}
               </span>
-              <span className="text-sm text-muted transition-colors group-hover:text-accent">Ledger</span>
+              <span className="text-sm text-muted transition-colors group-hover:text-accent-ink">Ledger</span>
             </Link>
           </div>
 
@@ -101,6 +101,7 @@ export default function AdminDashboardPage() {
               />
               <LineChart
                 label="Collected per day"
+                tone="violet"
                 format={(v) => formatNaira(v)}
                 points={(data?.series ?? []).map((p) => ({ date: p.date, value: p.collectedKobo }))}
               />

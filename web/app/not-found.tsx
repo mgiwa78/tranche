@@ -5,7 +5,7 @@ export default function NotFound() {
     <div className="flex min-h-screen flex-col items-center justify-center gap-3 text-center">
       <p className="text-sm text-faint">404</p>
       <h1 className="text-xl font-semibold text-ink">Page not found</h1>
-      <Link href="/" className="text-sm text-accent hover:underline">
+      <Link href="/" className="text-sm text-accent-ink hover:underline">
         Back to Tranche
       </Link>
     </div>

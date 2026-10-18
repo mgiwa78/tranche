@@ -34,7 +34,7 @@ export default function MerchantDashboardPage() {
               Add products and settlement details now; shoppers can check out once Tranche approves the store.
             </span>
           </span>
-          <Link href="/merchant/settings" className="text-sm text-accent hover:underline">
+          <Link href="/merchant/settings" className="text-sm text-accent-ink hover:underline">
             Settlement details
           </Link>
         </div>

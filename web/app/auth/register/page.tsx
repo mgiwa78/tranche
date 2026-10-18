@@ -69,7 +69,7 @@ export default function RegisterMerchantPage() {
       </form>
       <p className="mt-6 text-sm text-muted">
         Already selling with Tranche?{" "}
-        <Link href="/auth/login" className="focus-ring rounded-control font-medium text-accent hover:underline">
+        <Link href="/auth/login" className="focus-ring rounded-control font-medium text-accent-ink hover:underline">
           Sign in
         </Link>
       </p>

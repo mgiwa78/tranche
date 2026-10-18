@@ -19,7 +19,7 @@
       "package": "com.tranche.app",
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
-        "backgroundColor": "#0F7B5B",
+        "backgroundColor": "#0B0B10",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -39,19 +39,19 @@
         "expo-notifications",
         {
           "icon": "./assets/android-icon-monochrome.png",
-          "color": "#0F7B5B",
+          "color": "#C8F531",
           "defaultChannel": "payments"
         }
       ],
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#0A1B3D",
+          "backgroundColor": "#0B0B10",
           "image": "./assets/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "dark": {
-            "backgroundColor": "#0A1B3D",
+            "backgroundColor": "#0B0B10",
             "image": "./assets/splash-icon.png"
           }
         }

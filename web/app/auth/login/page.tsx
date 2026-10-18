@@ -119,7 +119,7 @@ export default function LoginPage() {
       </Suspense>
       <p className="mt-6 text-sm text-muted">
         Selling online?{" "}
-        <Link href="/auth/register" className="focus-ring rounded-control font-medium text-accent hover:underline">
+        <Link href="/auth/register" className="focus-ring rounded-control font-medium text-accent-ink hover:underline">
           Offer Tranche at checkout
         </Link>
       </p>
