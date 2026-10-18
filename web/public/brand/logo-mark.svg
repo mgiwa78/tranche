@@ -1,11 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" fill="none">
-  <defs>
-    <linearGradient id="np-a" x1="200" y1="240" x2="820" y2="780" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#4DA6FF"/>
-      <stop offset="0.55" stop-color="#1E7BFF"/>
-      <stop offset="1" stop-color="#0057FF"/>
-    </linearGradient>
-  </defs>
-  <path d="M232 318C338 340 404 452 512 452C620 452 686 340 792 318" stroke="url(#np-a)" stroke-width="132" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M232 706C338 684 404 572 512 572C620 572 686 684 792 706" stroke="url(#np-a)" stroke-width="132" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0F7B5B"/><g transform="translate(12 20)"><rect x="0" y="4" width="10" height="16" rx="3" fill="#fff"/><rect x="10.5" y="4" width="9" height="16" rx="3" fill="#fff" fill-opacity=".45"/><rect x="20" y="4" width="9" height="16" rx="3" fill="#fff" fill-opacity=".45"/><rect x="29.5" y="4" width="10.5" height="16" rx="3" fill="#fff" fill-opacity=".45"/></g></svg>

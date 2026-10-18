@@ -1,3 +1,4 @@
+import path from "path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -6,7 +7,7 @@ const nextConfig: NextConfig = {
   // Vercel and local builds use the default output.
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   // Monorepo root, so standalone tracing picks up the hoisted node_modules and @tranche/shared.
-  outputFileTracingRoot: require("path").join(__dirname, ".."),
+  outputFileTracingRoot: path.join(__dirname, ".."),
 };
 
 export default nextConfig;
