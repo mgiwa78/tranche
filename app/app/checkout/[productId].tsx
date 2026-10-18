@@ -135,7 +135,7 @@ export default function CheckoutScreen() {
       <SectionHeader right={<Text variant="callout" weight="semibold" tabular>{formatNaira(totalKobo)}</Text>}>
         Payment schedule
       </SectionHeader>
-      <View style={{ backgroundColor: colors.raised, borderRadius: radius.tile, borderWidth: 1, borderColor: colors.hairline, padding: 16, marginBottom: 8 }}>
+      <View style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: colors.hairline, paddingVertical: 16, marginBottom: 8 }}>
         <Schedule preview={schedule} highlightFirst />
       </View>
       {overLimit && summary ? (

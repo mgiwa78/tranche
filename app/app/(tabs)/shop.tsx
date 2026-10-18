@@ -5,7 +5,6 @@ import { RefreshControl, useWindowDimensions, View } from 'react-native';
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 
 import { EmptyState } from '../../src/components/EmptyState';
-import { useTabBarBottomInset } from '../../src/components/FloatingTabBar';
 import { ProductCard } from '../../src/components/shop/ProductCard';
 import { useListProductsQuery } from '../../src/store/rtk/customerSlice/catalog.service';
 import { useGetSummaryQuery } from '../../src/store/rtk/customerSlice/order.service';
@@ -27,7 +26,6 @@ export default function ShopScreen() {
   const router = useRouter();
   const { colors } = useTheme();
   const { width } = useWindowDimensions();
-  const bottom = useTabBarBottomInset();
   const scrollY = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollY.value = e.contentOffset.y;
@@ -63,7 +61,7 @@ export default function ShopScreen() {
       <Animated.ScrollView
         onScroll={onScroll}
         scrollEventThrottle={16}
-        contentContainerStyle={{ paddingBottom: bottom + 16 }}
+        contentContainerStyle={{ paddingBottom: 32 }}
         refreshControl={<RefreshControl refreshing={isFetching && !isLoading} onRefresh={refetch} tintColor={colors.ink3} />}
         keyboardShouldPersistTaps="handled"
       >

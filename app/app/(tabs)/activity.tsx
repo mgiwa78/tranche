@@ -5,7 +5,6 @@ import { RefreshControl, View } from 'react-native';
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 
 import { EmptyState } from '../../src/components/EmptyState';
-import { useTabBarBottomInset } from '../../src/components/FloatingTabBar';
 import { cardLabel, shortDate, timeAgo } from '../../src/lib/format';
 import { useListNotificationsQuery, useMarkAllNotificationsReadMutation } from '../../src/store/rtk/appSlice/app.service';
 import { useListPaymentsQuery } from '../../src/store/rtk/customerSlice/order.service';
@@ -27,7 +26,6 @@ const NOTIFICATION_ICON: Partial<Record<NotificationType, IconName>> = {
 export default function ActivityScreen() {
   const router = useRouter();
   const { colors } = useTheme();
-  const bottom = useTabBarBottomInset();
   const scrollY = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollY.value = e.contentOffset.y;
@@ -53,7 +51,7 @@ export default function ActivityScreen() {
       <Animated.ScrollView
         onScroll={onScroll}
         scrollEventThrottle={16}
-        contentContainerStyle={{ paddingBottom: bottom + 16 }}
+        contentContainerStyle={{ paddingBottom: 32 }}
         refreshControl={
           <RefreshControl refreshing={active.isFetching && !active.isLoading} onRefresh={() => void active.refetch()} tintColor={colors.ink3} />
         }

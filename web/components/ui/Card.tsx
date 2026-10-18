@@ -1,9 +1,3 @@
-export function Card({ className, children }: { className?: string; children: React.ReactNode }) {
-  return (
-    <div className={["rounded-surface border border-border p-5", className].filter(Boolean).join(" ")}>{children}</div>
-  );
-}
-
 export interface StatCardProps {
   label: string;
   value: string | number;

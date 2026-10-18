@@ -34,8 +34,9 @@ async function refreshTokens(refreshToken: string): Promise<RefreshResponse | nu
 
 function forceLogout() {
   if (typeof window === "undefined") return;
-  const next = encodeURIComponent(window.location.pathname + window.location.search);
-  window.location.assign(`/auth/login?reason=session_timeout&next=${next}`);
+  const { pathname, search } = window.location;
+  const next = pathname.startsWith("/auth") ? "" : `&next=${encodeURIComponent(pathname + search)}`;
+  window.location.assign(`/auth/login?reason=session_timeout${next}`);
 }
 
 /**
@@ -46,9 +47,11 @@ export function generateCustomBaseQuery(prefix: string): CustomBaseQuery {
   const rawBaseQuery = fetchBaseQuery({ baseUrl: `${API_ROOT}${prefix}`, prepareHeaders });
 
   return async (args, api, extraOptions) => {
+    const sentToken = Boolean((api.getState() as RootState).auth.accessToken);
     let result = await rawBaseQuery(args, api, extraOptions);
 
-    if (result.error && result.error.status === 401) {
+    // A 401 without a token (e.g. wrong password on login) is a normal error, not an expired session.
+    if (result.error && result.error.status === 401 && sentToken) {
       const state = api.getState() as RootState;
       const refreshToken = state.auth.refreshToken;
 

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { MerchantStatus } from "@tranche/shared";
+import { Callout, CalloutRow } from "@/components/ui/Callout";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { StatCard, StatGrid } from "@/components/ui/Card";
 import { LineChart } from "@/components/ui/LineChart";
@@ -26,18 +26,15 @@ export default function MerchantDashboardPage() {
       />
 
       {merchant?.status === MerchantStatus.PENDING && (
-        <div className="mb-10 flex items-center gap-4 rounded-surface border border-border px-5 py-4">
-          <span aria-hidden="true" className="h-8 w-1 rounded-full bg-warning" />
-          <span className="flex-1 text-sm">
-            <span className="block font-medium text-ink">Your store is waiting for review</span>
-            <span className="block text-muted">
-              Add products and settlement details now; shoppers can check out once Tranche approves the store.
-            </span>
-          </span>
-          <Link href="/merchant/settings" className="text-sm text-accent-ink hover:underline">
-            Settlement details
-          </Link>
-        </div>
+        <CalloutRow>
+          <Callout
+            href="/merchant/settings"
+            tone="warning"
+            title="Your store is waiting for review"
+            detail="Add products and settlement details now; shoppers can check out once Tranche approves the store."
+            action="Settlement details"
+          />
+        </CalloutRow>
       )}
 
       {isError ? (

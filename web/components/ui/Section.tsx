@@ -22,7 +22,7 @@ export function Section({
 
 export function PeriodPicker({ value, onChange }: { value: number; onChange: (days: number) => void }) {
   return (
-    <div className="flex gap-1 rounded-control border border-border p-0.5" role="group" aria-label="Period">
+    <div className="flex gap-4" role="group" aria-label="Period">
       {[7, 30, 90].map((d) => (
         <button
           key={d}
@@ -30,8 +30,8 @@ export function PeriodPicker({ value, onChange }: { value: number; onChange: (da
           onClick={() => onChange(d)}
           aria-pressed={value === d}
           className={[
-            "press focus-ring rounded-[4px] px-2.5 py-1 text-xs",
-            value === d ? "bg-canvas-subtle font-medium text-ink" : "text-muted hover:text-ink",
+            "focus-ring rounded-[2px] border-b-2 pb-1 text-xs transition-colors",
+            value === d ? "border-accent font-medium text-ink" : "border-transparent text-muted hover:text-ink",
           ].join(" ")}
         >
           {d}d

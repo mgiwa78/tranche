@@ -5,7 +5,6 @@ import { Alert, Linking, View } from 'react-native';
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 import { useStore } from 'react-redux';
 
-import { useTabBarBottomInset } from '../../src/components/FloatingTabBar';
 import { SUPPORT_EMAIL } from '../../src/config/env';
 import { signOut } from '../../src/session/signOut';
 import { useAppDispatch, useAppSelector } from '../../src/store/hooks';
@@ -19,7 +18,6 @@ export default function AccountScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const store = useStore<RootState>();
-  const bottom = useTabBarBottomInset();
   const scrollY = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollY.value = e.contentOffset.y;
@@ -47,7 +45,7 @@ export default function AccountScreen() {
   return (
     <Screen>
       <TabHeader title="Account" scrollY={scrollY} />
-      <Animated.ScrollView onScroll={onScroll} scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: bottom + 16 }}>
+      <Animated.ScrollView onScroll={onScroll} scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: 32 }}>
         <LargeTitle>Account</LargeTitle>
         <View style={{ paddingHorizontal: gutter }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14, marginBottom: 28 }}>

@@ -90,12 +90,12 @@ function LoginForm() {
       {process.env.NODE_ENV !== "production" && (
         <div className="mt-2 border-t border-border pt-4 text-xs text-muted">
           <p className="mb-2 text-faint">Seeded demo accounts (password Tranche123!)</p>
-          <div className="flex gap-2">
+          <div className="flex gap-4">
             {DEMO_ACCOUNTS.map((a) => (
               <button
                 key={a.email}
                 type="button"
-                className="press focus-ring rounded-control border border-border px-2 py-1 text-ink hover:bg-canvas-subtle"
+                className="focus-ring rounded-[2px] text-ink underline decoration-border-strong underline-offset-4 hover:decoration-accent"
                 onClick={() => formik.setValues({ email: a.email, password: "Tranche123!" })}
               >
                 {a.label}

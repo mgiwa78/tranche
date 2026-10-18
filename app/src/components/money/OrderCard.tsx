@@ -40,11 +40,9 @@ export function OrderCard({ order, onPress }: { order: OrderView; onPress: () =>
       accessibilityRole="button"
       accessibilityLabel={`${order.merchantName ?? 'Order'} ${order.reference}, ${order.installmentsPaid} of ${order.installmentCount} paid`}
       style={{
-        backgroundColor: colors.raised,
-        borderRadius: radius.tile,
-        borderWidth: 1,
-        borderColor: order.status === OrderStatus.OVERDUE ? colors.warn : colors.hairline,
-        padding: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.hairline,
+        paddingVertical: 16,
         gap: 12,
       }}
     >

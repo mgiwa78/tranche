@@ -41,8 +41,6 @@ export type ThemeColors = {
 
   scrim: string;
 
-  tabBar: string;
-  tabBarBorder: string;
 
   avatarTones: AvatarTone[];
   statusBar: 'light' | 'dark';
@@ -84,8 +82,6 @@ export const lightColors: ThemeColors = {
   successFill: '#15803D',
 
   scrim: 'rgba(11, 11, 16, 0.45)',
-  tabBar: brand.ink,
-  tabBarBorder: 'rgba(245, 245, 240, 0.06)',
 
   avatarTones: [
     { bg: '#EAF8C4', fg: '#3D5600' },
@@ -127,8 +123,6 @@ export const darkColors: ThemeColors = {
   successFill: '#16A34A',
 
   scrim: 'rgba(0, 0, 0, 0.66)',
-  tabBar: '#16161D',
-  tabBarBorder: 'rgba(245, 245, 240, 0.08)',
 
   avatarTones: [
     { bg: '#2B3510', fg: '#D9F77A' },

@@ -48,11 +48,10 @@ export default function OnboardingScreen() {
               entering={FadeInDown.delay(120).duration(duration.slow).easing(easeOut)}
               style={{
                 marginTop: 36,
-                borderRadius: radius.panel,
-                backgroundColor: 'rgba(245,245,240,0.06)',
-                borderWidth: 1,
-                borderColor: 'rgba(245,245,240,0.1)',
-                padding: 20,
+                borderTopWidth: 1,
+                borderBottomWidth: 1,
+                borderColor: 'rgba(245,245,240,0.12)',
+                paddingVertical: 20,
                 gap: 16,
               }}
             >

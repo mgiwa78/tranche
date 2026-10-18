@@ -1,7 +1,7 @@
 import { Redirect, Tabs } from 'expo-router';
 import React from 'react';
 
-import { FloatingTabBar, type FloatingTabBarProps } from '../../src/components/FloatingTabBar';
+import { TabBar, type TabBarProps } from '../../src/components/TabBar';
 import { useAppSelector } from '../../src/store/hooks';
 import { useTheme } from '../../src/theme/ThemeProvider';
 
@@ -13,7 +13,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      tabBar={(props) => <FloatingTabBar {...(props as unknown as FloatingTabBarProps)} />}
+      tabBar={(props) => <TabBar {...(props as unknown as TabBarProps)} />}
       screenOptions={{
         headerShown: false,
         sceneStyle: { backgroundColor: colors.canvas },

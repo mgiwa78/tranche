@@ -114,7 +114,7 @@ export default function OrderScreen() {
       </View>
 
       <SectionHeader>Schedule</SectionHeader>
-      <View style={{ backgroundColor: colors.raised, borderRadius: radius.tile, borderWidth: 1, borderColor: colors.hairline, padding: 16, marginBottom: 28 }}>
+      <View style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: colors.hairline, paddingVertical: 16, marginBottom: 28 }}>
         <Schedule installments={order.installments} />
       </View>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { Callout, CalloutRow } from "@/components/ui/Callout";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { StatCard, StatGrid } from "@/components/ui/Card";
 import { LineChart } from "@/components/ui/LineChart";
@@ -27,44 +27,25 @@ export default function AdminDashboardPage() {
         <p className="text-sm text-danger">Couldn&apos;t load dashboard stats.</p>
       ) : (
         <div className={isLoading ? "animate-pulse" : undefined}>
-          <div className="mb-10 grid gap-3 sm:grid-cols-2">
-            <Link
+          <CalloutRow columns={2}>
+            <Callout
               href="/admin/payouts?status=requested"
-              className="focus-ring group flex items-center gap-4 rounded-surface border border-border px-5 py-4 transition-colors hover:border-border-strong"
-            >
-              <span
-                aria-hidden="true"
-                className={["h-8 w-1 rounded-full", pending ? "bg-accent" : "bg-border-strong"].join(" ")}
-              />
-              <span className="flex-1 text-sm font-medium text-ink">
-                {pending ? `${pending} payout${pending === 1 ? "" : "s"} waiting for review` : "No payouts waiting"}
-              </span>
-              <span className="text-sm text-muted transition-colors group-hover:text-accent-ink">Review</span>
-            </Link>
-            <Link
+              tone={pending ? "accent" : "idle"}
+              title={pending ? `${pending} payout${pending === 1 ? "" : "s"} waiting for review` : "No payouts waiting"}
+              action="Review"
+            />
+            <Callout
               href="/admin/ledger"
-              className="focus-ring group flex items-center gap-4 rounded-surface border border-border px-5 py-4 transition-colors hover:border-border-strong"
-            >
-              <span
-                aria-hidden="true"
-                className={[
-                  "h-8 w-1 rounded-full",
-                  trial ? (trial.balanced ? "bg-success" : "bg-danger") : "bg-border-strong",
-                ].join(" ")}
-              />
-              <span className="flex-1 text-sm">
-                <span className="block font-medium text-ink">
-                  {trial ? (trial.balanced ? "Books balance" : "Ledger needs attention") : "Checking the ledger…"}
-                </span>
-                {trial && (
-                  <span className="block text-xs text-muted">
-                    {formatNaira(trial.totalDebitKobo)} debits = {formatNaira(trial.totalCreditKobo)} credits
-                  </span>
-                )}
-              </span>
-              <span className="text-sm text-muted transition-colors group-hover:text-accent-ink">Ledger</span>
-            </Link>
-          </div>
+              tone={trial ? (trial.balanced ? "success" : "danger") : "idle"}
+              title={trial ? (trial.balanced ? "Books balance" : "Ledger needs attention") : "Checking the ledger…"}
+              detail={
+                trial
+                  ? `${formatNaira(trial.totalDebitKobo)} debits = ${formatNaira(trial.totalCreditKobo)} credits`
+                  : undefined
+              }
+              action="Ledger"
+            />
+          </CalloutRow>
 
           <Section title="Book">
             <StatGrid>

@@ -87,7 +87,7 @@ export default function ProductScreen() {
 
       <View style={{ marginTop: 28 }}>
         <SectionHeader>Your schedule</SectionHeader>
-        <View style={{ backgroundColor: colors.raised, borderRadius: radius.tile, borderWidth: 1, borderColor: colors.hairline, padding: 16 }}>
+        <View style={{ borderTopWidth: 1, borderBottomWidth: 1, borderColor: colors.hairline, paddingVertical: 16 }}>
           <Schedule preview={schedule} highlightFirst />
         </View>
         <Text variant="footnote" color="ink3" style={{ marginTop: 8, paddingHorizontal: 4 }}>

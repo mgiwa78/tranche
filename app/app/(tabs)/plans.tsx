@@ -5,7 +5,6 @@ import { RefreshControl, View } from 'react-native';
 import Animated, { useAnimatedScrollHandler, useSharedValue } from 'react-native-reanimated';
 
 import { EmptyState } from '../../src/components/EmptyState';
-import { useTabBarBottomInset } from '../../src/components/FloatingTabBar';
 import { OrderCard } from '../../src/components/money/OrderCard';
 import { dueLabel } from '../../src/lib/format';
 import { useGetSummaryQuery, useListOrdersQuery } from '../../src/store/rtk/customerSlice/order.service';
@@ -22,7 +21,6 @@ const INK_FAINT = 'rgba(11, 11, 16, 0.5)';
 export default function PlansScreen() {
   const router = useRouter();
   const { colors } = useTheme();
-  const bottom = useTabBarBottomInset();
   const scrollY = useSharedValue(0);
   const onScroll = useAnimatedScrollHandler((e) => {
     scrollY.value = e.contentOffset.y;
@@ -43,7 +41,7 @@ export default function PlansScreen() {
       <Animated.ScrollView
         onScroll={onScroll}
         scrollEventThrottle={16}
-        contentContainerStyle={{ paddingBottom: bottom + 16 }}
+        contentContainerStyle={{ paddingBottom: 32 }}
         refreshControl={
           <RefreshControl
             refreshing={(orders.isFetching || summary.isFetching) && !orders.isLoading}

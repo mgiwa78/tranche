@@ -80,9 +80,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </header>
 
         <main className="flex flex-1 items-center justify-center px-4 py-10 sm:px-10">
-          <div className="w-full max-w-md rounded-surface border border-border bg-surface p-6 shadow-md sm:p-10">
-            {children}
-          </div>
+          <div className="w-full max-w-md">{children}</div>
         </main>
 
         <footer className="flex flex-shrink-0 flex-wrap items-center gap-x-5 gap-y-2 border-t border-border px-6 py-4 text-xs text-faint sm:px-10">

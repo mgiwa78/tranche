@@ -49,11 +49,9 @@ export function ListGroup({ children, header, footer, style, inset = 16 }: Group
       {header ? <SectionHeader>{header}</SectionHeader> : null}
       <View
         style={{
-          backgroundColor: colors.raised,
-          borderRadius: radius.tile,
-          borderWidth: 1,
+          borderTopWidth: 1,
+          borderBottomWidth: 1,
           borderColor: colors.hairline,
-          overflow: 'hidden',
         }}
       >
         {rows.map((row, i) => (
