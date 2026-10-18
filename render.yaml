@@ -1,0 +1,68 @@
+# Render blueprint: https://render.com/docs/blueprint-spec
+# One Docker web service (HTTP + BullMQ workers, APP_ROLE=all), managed Postgres and Key Value (Redis).
+# autoDeploy is off: GitHub Actions triggers the deploy hook only after CI passes on main.
+services:
+  - type: web
+    name: tranche-api
+    runtime: docker
+    dockerfilePath: ./api/Dockerfile
+    dockerContext: .
+    plan: free
+    region: frankfurt
+    healthCheckPath: /api/v1/health
+    autoDeploy: false
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: APP_ROLE
+        value: all
+      - key: APP_URL
+        value: https://tranche-api.onrender.com
+      - key: ALLOWED_ORIGINS
+        value: https://tranche.vercel.app,https://*.vercel.app
+      - key: SEED_ON_BOOT
+        value: demo
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tranche-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: keyvalue
+          name: tranche-redis
+          property: connectionString
+      - key: ENCRYPTION_KEY
+        generateValue: true
+      - key: QUEUE_DASHBOARD_USER
+        value: admin
+      - key: QUEUE_DASHBOARD_PASSWORD
+        generateValue: true
+      - key: JWT_PRIVATE_KEY
+        sync: false
+      - key: JWT_PUBLIC_KEY
+        sync: false
+      - key: PAYSTACK_SECRET_KEY
+        sync: false
+      - key: PAYSTACK_PUBLIC_KEY
+        sync: false
+      - key: EXPO_ACCESS_TOKEN
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: SEED_ADMIN_PASSWORD
+        sync: false
+
+  - type: keyvalue
+    name: tranche-redis
+    plan: free
+    region: frankfurt
+    # BullMQ requires noeviction; an evicted key is a lost job.
+    maxmemoryPolicy: noeviction
+    ipAllowList: []
+
+databases:
+  - name: tranche-db
+    plan: free
+    region: frankfurt
+    databaseName: tranche
+    user: tranche

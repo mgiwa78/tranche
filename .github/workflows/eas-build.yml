@@ -1,0 +1,46 @@
+name: EAS build
+
+# Mobile builds cost build minutes, so they run on demand (or on an app-v* tag) rather than every push.
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: eas.json build profile
+        type: choice
+        options: [preview, development, production]
+        default: preview
+      platform:
+        description: Platform
+        type: choice
+        options: [android, ios, all]
+        default: android
+  push:
+    tags: ["app-v*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID }}
+    steps:
+      - name: Require EXPO_TOKEN
+        if: env.EXPO_TOKEN == ''
+        run: |
+          echo "::error::Set the EXPO_TOKEN secret (expo.dev > Access tokens) to run EAS builds."
+          exit 1
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @tranche/shared build
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      - name: Start build
+        working-directory: app
+        run: eas build --profile "${{ inputs.profile || 'production' }}" --platform "${{ inputs.platform || 'all' }}" --non-interactive --no-wait

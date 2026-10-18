@@ -1,0 +1,2 @@
+CREATE DATABASE tranche;
+CREATE DATABASE tranche_test;

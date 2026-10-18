@@ -25,6 +25,8 @@ app/android/
 
 # Environment variables
 .env
+infra/env/*.env
+infra/docker/.env
 .env.local
 .env.*.local
 !.env.example

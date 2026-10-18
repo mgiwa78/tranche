@@ -1,0 +1,67 @@
+name: Deploy
+
+# Runs only after CI succeeds on main: build -> test -> deploy.
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  api:
+    name: API to Render
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+      API_URL: ${{ vars.API_URL || 'https://tranche-api.onrender.com' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Trigger Render deploy
+        if: env.RENDER_DEPLOY_HOOK_URL != ''
+        run: curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
+      - name: Wait for the new release to be healthy
+        if: env.RENDER_DEPLOY_HOOK_URL != ''
+        run: |
+          sleep 60
+          bash infra/scripts/wait-healthy.sh "$API_URL" 900
+      - name: Skipped
+        if: env.RENDER_DEPLOY_HOOK_URL == ''
+        run: echo "::notice::RENDER_DEPLOY_HOOK_URL is not set; skipping the api deploy."
+
+  web:
+    name: Web to Vercel
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        if: env.VERCEL_TOKEN != ''
+      - uses: actions/setup-node@v4
+        if: env.VERCEL_TOKEN != ''
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Pull Vercel project settings
+        if: env.VERCEL_TOKEN != ''
+        run: npx --yes vercel@latest pull --yes --environment=production --token="$VERCEL_TOKEN"
+      - name: Build
+        if: env.VERCEL_TOKEN != ''
+        run: npx --yes vercel@latest build --prod --token="$VERCEL_TOKEN"
+      - name: Deploy prebuilt output
+        if: env.VERCEL_TOKEN != ''
+        run: npx --yes vercel@latest deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+      - name: Skipped
+        if: env.VERCEL_TOKEN == ''
+        run: echo "::notice::VERCEL_TOKEN is not set; skipping the web deploy."
