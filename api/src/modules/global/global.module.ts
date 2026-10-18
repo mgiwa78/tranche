@@ -4,11 +4,19 @@ import { SystemController } from "./controllers/system.controller";
 import { NotificationController } from "./controllers/notification.controller";
 import { WebhookController } from "./controllers/webhook.controller";
 import { DevCheckoutController } from "./controllers/dev-checkout.controller";
+import { PaymentReturnController } from "./controllers/payment-return.controller";
 import { AuthService } from "./services/auth.service";
 
 /** Public + any-signed-in-user routes: auth, health, app config, notifications, webhooks. */
 @Module({
-  controllers: [AuthController, SystemController, NotificationController, WebhookController, DevCheckoutController],
+  controllers: [
+    AuthController,
+    SystemController,
+    NotificationController,
+    WebhookController,
+    DevCheckoutController,
+    PaymentReturnController,
+  ],
   providers: [AuthService],
   exports: [AuthService],
 })

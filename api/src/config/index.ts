@@ -84,7 +84,10 @@ const configSchema = z.object({
     secretKey: z.string().default(""),
     publicKey: z.string().default(""),
     baseUrl: z.string().default("https://api.paystack.co"),
-    callbackUrl: z.string().default("tranche://checkout/callback"),
+    /** Where Paystack sends the browser after checkout. Empty = this api's /payments/return. */
+    callbackUrl: z.string().default(""),
+    /** The app deep link /payments/return redirects to. */
+    appReturnUrl: z.string().default("tranche://checkout/callback"),
   }),
   expo: z.object({
     accessToken: z.string().default(""),
@@ -175,6 +178,7 @@ const Config = configSchema.parse({
     publicKey: process.env.PAYSTACK_PUBLIC_KEY,
     baseUrl: process.env.PAYSTACK_BASE_URL,
     callbackUrl: process.env.PAYSTACK_CALLBACK_URL,
+    appReturnUrl: process.env.APP_RETURN_URL,
   },
   expo: {
     accessToken: process.env.EXPO_ACCESS_TOKEN,
@@ -197,6 +201,9 @@ if (Config.nodeEnv !== "test") {
       : `Database: ${Config.database.host}:${Config.database.port}/${Config.database.name}`,
   );
 }
+
+/** Paystack needs an https callback; the api bounces it into the app's deep link. */
+export const paystackCallbackUrl = () => Config.paystack.callbackUrl || `${Config.appUrl}/api/v1/payments/return`;
 
 export const runsHttp = () => Config.appRole !== "worker";
 export const runsWorkers = () => Config.appRole !== "api";

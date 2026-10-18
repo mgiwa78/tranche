@@ -11,7 +11,7 @@ import {
 } from "@tranche/shared";
 import { Installment, Order, OrderItem, Payment, PaymentMethod, Product, User } from "@/database/entities";
 import { Logger } from "@/common/logger";
-import { Config } from "@/config";
+import { Config, paystackCallbackUrl } from "@/config";
 import { BadRequestError, ConflictError, NotFoundError } from "@/common/errors";
 import { createReference, decryptSecret, encryptSecret } from "@/common/crypto";
 import { LedgerService } from "../ledger/ledger.service";
@@ -125,7 +125,7 @@ export class CollectionService {
         email: customer.email,
         amountKobo,
         reference: payment.reference,
-        callbackUrl: Config.paystack.callbackUrl,
+        callbackUrl: paystackCallbackUrl(),
         metadata,
       });
       await manager.update(Payment, payment.id, { authorizationUrl });

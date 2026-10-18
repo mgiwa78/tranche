@@ -79,6 +79,11 @@ describe("Paystack webhooks", () => {
     expect(list.data.map((e: any) => e.event).sort()).toEqual(["charge.success", "subscription.create"]);
   });
 
+  it("bounces the https checkout return into the app's deep link", async () => {
+    const res = await api(null, "GET", "/payments/return?reference=TRP_abc123&trxref=TRP_abc123");
+    expect(res.status).toBe(302);
+  });
+
   it("rejects non-JSON bodies even when signed", async () => {
     const res = await rawPost("/webhooks/paystack", "not json", { "x-paystack-signature": fake.sign("not json") });
     expect(res.status).toBe(400);
