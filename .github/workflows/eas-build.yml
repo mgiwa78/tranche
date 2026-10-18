@@ -22,7 +22,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-      EAS_PROJECT_ID: ${{ vars.EAS_PROJECT_ID }}
     steps:
       - name: Require EXPO_TOKEN
         if: env.EXPO_TOKEN == ''

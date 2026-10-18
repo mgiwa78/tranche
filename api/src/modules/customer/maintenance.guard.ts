@@ -2,7 +2,7 @@ import { CanActivate, Injectable } from "@nestjs/common";
 import { MaintenanceModeError } from "@/common/errors";
 import { SettingsService } from "@/core/settings.service";
 
-/** The reference's maintenance-mode middleware: shopper routes close while admins keep working. */
+/** Shopper routes close in maintenance mode while admins keep working. */
 @Injectable()
 export class MaintenanceGuard implements CanActivate {
   constructor(private readonly settings: SettingsService) {}

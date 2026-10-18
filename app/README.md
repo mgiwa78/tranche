@@ -55,7 +55,7 @@ Restart Metro with `npx expo start -c` after changing `app/.env`, and allow Node
 
 ## Push notifications
 
-Expo push tokens need an EAS project id. Run `eas init`, then set `EAS_PROJECT_ID` (read by `app.config.js`). Without it the app skips push registration and reminders still appear in Activity. Remote push doesn't exist in Expo Go on Android (since SDK 53), so `src/lib/push.ts` loads `expo-notifications` lazily and becomes a no-op there; use a development build (`eas build --profile development`) to test push.
+Expo push tokens need the EAS project id, which lives in `app.json` (`extra.eas.projectId`, written by `eas init`). Without it the app skips push registration and reminders still appear in Activity. Remote push doesn't exist in Expo Go on Android (since SDK 53), so `src/lib/push.ts` loads `expo-notifications` lazily and becomes a no-op there; use a development build (`eas build --profile development`) to test push.
 
 ## Builds
 

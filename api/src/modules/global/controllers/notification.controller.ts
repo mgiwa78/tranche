@@ -15,7 +15,6 @@ import type { User } from "@/database/entities";
 import { DeviceTokenRepository, NotificationRepository } from "@/repository/notification.repository";
 import { toNotificationView } from "@/core/billing/presenters";
 
-/** Device tokens and the in-app inbox, for any signed-in user. */
 @Controller("notifications")
 export class NotificationController {
   constructor(

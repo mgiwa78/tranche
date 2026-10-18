@@ -20,10 +20,7 @@ const HTTP_CODES: Record<number, string> = {
   429: "TOO_MANY_REQUESTS",
 };
 
-/**
- * The reference's Express `errorHandler`, as a Nest filter. Every error leaves the api as
- * `{ success: false, error: { message, code, details? }, timestamp, requestId }`.
- */
+/** Every error leaves the api as `{ success: false, error: { message, code, details? }, timestamp, requestId }`. */
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   catch(err: unknown, host: ArgumentsHost): void {

@@ -17,9 +17,8 @@ type ConfirmFn = (options: ConfirmOptions) => Promise<boolean>;
 const ConfirmContext = createContext<ConfirmFn | null>(null);
 
 /**
- * ConfirmProvider + useConfirm(): a promise-based
- * confirm() replacing window.confirm, mounted once at the app root. Built
- * on the native <dialog> element for free focus-trapping and Esc-to-close.
+ * ConfirmProvider + useConfirm(): a promise-based confirm() replacing window.confirm, mounted once
+ * at the app root. Built on the native <dialog> element for focus trapping and Esc-to-close.
  */
 export function ConfirmProvider({ children }: { children: React.ReactNode }) {
   const dialogRef = useRef<HTMLDialogElement>(null);

@@ -1,10 +1,7 @@
 /**
- * Lightweight obfuscation for localStorage-persisted auth state, mirroring
- * the shared encrypt-data pattern. This is not cryptographic
- * security (the key is necessarily client-side) — it just keeps tokens out
- * of plain sight in devtools/localStorage dumps and casual XSS payloads
- * that grep for JSON shapes. The real security boundary is the access
- * token's short TTL and the refresh token's single-use rotation.
+ * Obfuscation for localStorage-persisted auth state, not cryptographic security (the key is
+ * necessarily client-side). It keeps tokens out of plain sight in devtools and storage dumps; the
+ * real boundary is the short access-token TTL and single-use refresh rotation.
  */
 
 const APP_KEY = "tranche-web-v1";

@@ -17,12 +17,7 @@ export interface ModalProps {
   onClose?: () => void;
 }
 
-/**
- * Wraps the native <dialog> element
- * rather than a hand-rolled overlay + Escape-key
- * Modal.tsx — same net component API, but focus-trapping and Esc-to-close
- * come from the platform for free.
- */
+/** Wraps the native <dialog> element, so focus trapping and Esc-to-close come from the platform. */
 export const Modal = forwardRef<ModalHandle, ModalProps>(function Modal(
   { title, description, children, className, onClose },
   ref,

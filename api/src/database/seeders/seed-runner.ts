@@ -1,66 +1,98 @@
 import "reflect-metadata";
+import { DataSource } from "typeorm";
+import { faker } from "@faker-js/faker";
+import { AppDataSource } from "@/config/data-source";
+import { Logger } from "@/common/logger";
+import { PlatformSettingSeeder } from "./platform-setting.seeder";
+import { LedgerAccountSeeder } from "./ledger-account.seeder";
+import { AdminSeeder } from "./admin.seeder";
+import { UserSeeder } from "./user.seeder";
+import { MerchantSeeder } from "./merchant.seeder";
+import { ProductSeeder } from "./product.seeder";
+import { PaymentMethodSeeder } from "./payment-method.seeder";
+import { DeviceTokenSeeder } from "./device-token.seeder";
+import { OrderSeeder } from "./order.seeder";
+import { PayoutSeeder } from "./payout.seeder";
+import { WebhookEventSeeder } from "./webhook-event.seeder";
+import { NotificationSeeder } from "./notification.seeder";
+import { AuditLogSeeder } from "./audit-log.seeder";
 
+interface Seeder {
+  run(dataSource: DataSource): Promise<void>;
+}
 
+// Always safe: settings, the platform ledger accounts and the super admins in ADMIN_EMAILS.
+const ESSENTIAL: [string, Seeder][] = [
+  ["platform settings", new PlatformSettingSeeder()],
+  ["platform ledger accounts", new LedgerAccountSeeder()],
+  ["admins", new AdminSeeder()],
+];
+
+// Faker data for every table; only run on a freshly reset database.
+const FAKE: [string, Seeder][] = [
+  ["users", new UserSeeder()],
+  ["merchants", new MerchantSeeder()],
+  ["products", new ProductSeeder()],
+  ["payment methods", new PaymentMethodSeeder()],
+  ["device tokens", new DeviceTokenSeeder()],
+  ["orders, installments, payments and ledger postings", new OrderSeeder()],
+  ["payouts", new PayoutSeeder()],
+  ["webhook events", new WebhookEventSeeder()],
+  ["notifications", new NotificationSeeder()],
+  ["audit logs", new AuditLogSeeder()],
+];
+
+export async function runSeeders(
+  dataSource: DataSource,
+  { fake }: { fake: boolean },
+  log: (m: string) => void = () => undefined,
+) {
+  for (const [label, seeder] of [...ESSENTIAL, ...(fake ? FAKE : [])]) {
+    log(`Seeding ${label}`);
+    await seeder.run(dataSource);
+  }
+}
+
+/**
+ * SEED_RESET (default: true, except NODE_ENV=production where it defaults to false)
+ *   true  -> drop the schema, rebuild it, seed settings, admins and faker data for every table.
+ *   false -> keep the data, only ensure settings, ledger accounts and admins exist (what prod uses).
+ * SEED_IF_EMPTY=true turns a reset into the essentials-only run when users already exist, so a
+ * container can seed demo data on its first boot and never wipe it on later deploys.
+ *
+ * Demo logins (password Tranche123!): customer@tranche.ng, merchant@tranche.ng, support@tranche.ng,
+ * and the super admins in ADMIN_EMAILS (password SEED_ADMIN_PASSWORD).
+ */
 async function main() {
+  const logger = new Logger({ level: "info", service: "seed-runner" });
   const isProduction = process.env.NODE_ENV === "production";
   let reset = process.env.SEED_RESET === undefined ? !isProduction : process.env.SEED_RESET === "true";
-
-  if (reset) {
-    process.env.FORCE_FAKE_PAYMENTS = "true";
-    process.env.QUEUE_INLINE = "true";
-    process.env.APP_ROLE = "api";
-  }
-
-  // Config is parsed on first import, so this probe runs only after the env above is set.
-  if (reset && process.env.SEED_IF_EMPTY === "true") {
-    const { AppDataSource: probe } = await import("@/config/data-source");
-    await probe.initialize();
-    const [{ count }] = await probe.query("SELECT COUNT(*)::int AS count FROM users").catch(() => [{ count: 0 }]);
-    await probe.destroy();
-    if (count > 0) reset = false;
-  }
-
-  const { NestFactory } = await import("@nestjs/core");
-  const { faker } = await import("@faker-js/faker");
-  const { AppModule } = await import("@/app.module");
-  const { AppDataSource } = await import("@/config/data-source");
-  const { Logger } = await import("@/common/logger");
-  const { EssentialSeeder } = await import("./essential.seeder");
-  const { CatalogSeeder } = await import("./catalog.seeder");
-  const { OrderSeeder } = await import("./order.seeder");
-
-  const logger = new Logger({ level: "info", service: "seed-runner" });
   faker.seed(20261014);
 
   try {
+    await AppDataSource.initialize();
+
+    if (reset && process.env.SEED_IF_EMPTY === "true") {
+      const [{ count }] = await AppDataSource.query("SELECT COUNT(*)::int AS count FROM users").catch(() => [
+        { count: 0 },
+      ]);
+      if (count > 0) {
+        logger.info("SEED_IF_EMPTY: database already has users, keeping data");
+        reset = false;
+      }
+    }
+
     if (reset) {
-      logger.warn("SEED_RESET: dropping schema and re-running migrations");
-      await AppDataSource.initialize();
+      logger.warn("SEED_RESET: dropping schema and rebuilding it from the migrations");
       await AppDataSource.dropDatabase();
+      // The migrations (not synchronize) build the schema, so the ledger triggers exist too.
       await AppDataSource.runMigrations();
-      await AppDataSource.destroy();
     }
 
-    const app = await NestFactory.createApplicationContext(AppModule, { logger: ["error", "warn"] });
-    const { DataSource } = await import("typeorm");
-    const ctx = { app, dataSource: app.get(DataSource), log: (m: string) => logger.info(m) };
-
-    const seeders: [string, { run: (c: typeof ctx) => Promise<void> }][] = [
-      ["essentials", new EssentialSeeder()],
-      ...(reset
-        ? ([
-            ["catalog", new CatalogSeeder()],
-            ["orders", new OrderSeeder()],
-          ] as [string, { run: (c: typeof ctx) => Promise<void> }][])
-        : []),
-    ];
-    for (const [label, seeder] of seeders) {
-      logger.info(`Seeding ${label}`);
-      await seeder.run(ctx);
-    }
-
-    await app.close();
-    logger.info(reset ? "All seeding completed successfully" : "Essentials seeded (SEED_RESET=false, no fake data)");
+    await runSeeders(AppDataSource, { fake: reset }, (m) => logger.info(m));
+    logger.info(
+      reset ? "All seeding completed successfully" : "Settings and admins seeded (SEED_RESET=false, no fake data)",
+    );
     process.exitCode = 0;
   } catch (err) {
     logger.error("Seeding failed:", err as Error);

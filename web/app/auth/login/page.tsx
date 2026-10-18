@@ -15,7 +15,7 @@ import { useLoginMutation } from "@/store/rtk/authSlice/auth.slice";
 
 const DEMO_ACCOUNTS = [
   { label: "Merchant", email: "merchant@tranche.ng" },
-  { label: "Admin", email: "admin@tranche.ng" },
+  { label: "Admin", email: "admin1@tranche.ng" },
 ];
 
 function LoginForm() {
@@ -33,7 +33,6 @@ function LoginForm() {
 
   const formik = useFormik<LoginDTO>({
     initialValues: { email: "", password: "" },
-    // Same schema the api validates with.
     validate: (values) => {
       const result = validateWith(loginSchema, values);
       return result.ok ? {} : result.errors;
@@ -89,7 +88,7 @@ function LoginForm() {
         Sign in
       </Button>
       {process.env.NODE_ENV !== "production" && (
-        <div className="rounded-surface border border-border px-4 py-3 text-xs text-muted">
+        <div className="mt-2 border-t border-border pt-4 text-xs text-muted">
           <p className="mb-2 text-faint">Seeded demo accounts (password Tranche123!)</p>
           <div className="flex gap-2">
             {DEMO_ACCOUNTS.map((a) => (
@@ -112,12 +111,12 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <div>
-      <h1 className="font-brand text-2xl font-medium tracking-tight text-ink">Sign in</h1>
-      <p className="mb-6 mt-1 text-sm text-muted">For merchants and Tranche staff.</p>
+      <h1 className="font-brand text-3xl font-semibold tracking-[-0.03em] text-ink">Sign in</h1>
+      <p className="mb-8 mt-2 text-sm text-muted">For merchants and Tranche staff.</p>
       <Suspense>
         <LoginForm />
       </Suspense>
-      <p className="mt-6 text-sm text-muted">
+      <p className="mt-6 border-t border-border pt-5 text-sm text-muted">
         Selling online?{" "}
         <Link href="/auth/register" className="focus-ring rounded-control font-medium text-accent-ink hover:underline">
           Offer Tranche at checkout

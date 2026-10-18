@@ -3,10 +3,7 @@ import { Reflector } from "@nestjs/core";
 import { Observable, map } from "rxjs";
 import { RESPONSE_MESSAGE_KEY, RAW_RESPONSE_KEY } from "../decorators";
 
-/**
- * The reference's `sendSuccessResponse` as an interceptor: whatever a controller returns
- * leaves as `{ success: true, response, message? }`. `@RawResponse()` opts out (webhooks).
- */
+/** Whatever a controller returns leaves as `{ success: true, response, message? }`. `@RawResponse()` opts out (webhooks). */
 @Injectable()
 export class ResponseInterceptor implements NestInterceptor {
   constructor(private readonly reflector: Reflector) {}

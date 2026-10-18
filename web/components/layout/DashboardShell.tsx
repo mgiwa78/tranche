@@ -7,7 +7,7 @@ import { RoleGuard } from "@/components/auth/RoleGuard";
 import { Sidebar, type NavSection } from "./Sidebar";
 import { TopBar } from "./TopBar";
 
-/** The reference admin layout (sidebar, mobile drawer, top bar), shared by both dashboard areas. */
+/** Sidebar, mobile drawer and top bar, shared by both dashboard areas. */
 export function DashboardShell({
   role,
   sections,

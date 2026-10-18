@@ -1,4 +1,3 @@
-/** Uppercase eyebrow + content: the dashboard's only section heading style. */
 export function Section({
   title,
   actions,

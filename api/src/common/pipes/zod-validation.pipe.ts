@@ -2,13 +2,7 @@ import { Injectable, PipeTransform } from "@nestjs/common";
 import { ZodError, ZodType } from "zod";
 import { ValidationError } from "../errors";
 
-/**
- * The reference's `validate(schema)` middleware as a Nest pipe. Schemas come from
- * `@tranche/shared`, so the api rejects exactly what web/app forms reject.
- *
- *   @Body(new ZodValidationPipe(createProductSchema)) body: CreateProductDTO
- *   @Query(new ZodValidationPipe(listOrdersQuerySchema)) query: ListOrdersQueryDTO
- */
+/** Schemas come from `@tranche/shared`, so the api rejects exactly what web/app forms reject. */
 @Injectable()
 export class ZodValidationPipe<T> implements PipeTransform<unknown, T> {
   constructor(private readonly schema: ZodType<T>) {}

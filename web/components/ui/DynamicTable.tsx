@@ -38,17 +38,9 @@ export interface DynamicTableProps<T> {
 }
 
 /**
- * One generic
- * table drives every admin list page via props (loading/empty rows,
- * per-column render(), a viewAction row-click, and a per-row action menu),
- * so no page hand-rolls its own <table> markup.
- *
- * Simplification vs. the reference: row actions use a native <details>
- * dropdown instead of a portal + getBoundingClientRect, matching the
- * zero-JS pattern. Trade-off:
- * a menu near the table's right edge can clip against overflow-x-auto —
- * acceptable for this table's column counts, worth a portal if that
- * changes.
+ * One generic table for every list page: loading/empty rows, per-column render(), row click via
+ * viewAction and a per-row action menu. Row actions use a native <details> dropdown, so a menu
+ * near the right edge can clip inside overflow-x-auto.
  */
 export function DynamicTable<T extends Record<string, unknown>>({
   data,

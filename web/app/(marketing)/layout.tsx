@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 
 const NAV = [
   { href: "/#how-it-works", label: "How it works" },
@@ -10,7 +11,7 @@ const NAV = [
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="theme-dark min-h-screen bg-canvas text-ink">
+    <div className="min-h-screen bg-canvas text-ink">
       <header className="sticky top-0 z-40 border-b border-border bg-canvas/85 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-8">
           <Link href="/" className="focus-ring rounded-control" aria-label="Tranche home">
@@ -24,6 +25,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             ))}
           </nav>
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <Link
               href="/auth/login"
               className="focus-ring rounded-control px-3 py-1.5 text-sm text-muted hover:text-ink"

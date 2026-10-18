@@ -19,7 +19,6 @@ export default function LoginScreen() {
   const [serverError, setServerError] = useState<string | null>(null);
 
   async function submit() {
-    // Same schema the api validates with.
     const result = validateWith(loginSchema, { email, password });
     if (!result.ok) return setErrors(result.errors);
     setErrors({});

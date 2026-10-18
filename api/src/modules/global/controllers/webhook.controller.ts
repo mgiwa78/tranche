@@ -3,10 +3,7 @@ import type { Request } from "express";
 import { Public } from "@/common/decorators";
 import { WebhookService } from "@/core/billing/webhook.service";
 
-/**
- * Paystack posts here. Mounted before the general rate limiter (as the reference does for
- * its Stream webhook) and verified with HMAC-SHA512 over the raw body.
- */
+/** Paystack posts here. Mounted before the general rate limiter and verified with HMAC-SHA512 over the raw body. */
 @Controller("webhooks")
 export class WebhookController {
   constructor(private readonly webhooks: WebhookService) {}

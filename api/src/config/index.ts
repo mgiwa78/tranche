@@ -93,7 +93,6 @@ const configSchema = z.object({
     accessToken: z.string().default(""),
   }),
   seed: z.object({
-    adminEmail: z.string().default("admin@tranche.ng"),
     adminPassword: z.string().default("Tranche123!"),
   }),
 });
@@ -184,7 +183,6 @@ const Config = configSchema.parse({
     accessToken: process.env.EXPO_ACCESS_TOKEN,
   },
   seed: {
-    adminEmail: process.env.SEED_ADMIN_EMAIL,
     adminPassword: process.env.SEED_ADMIN_PASSWORD,
   },
 });

@@ -15,7 +15,7 @@ export function LogoMark({ className, tone = "brand" }: { className?: string; to
   );
 }
 
-/** App-icon tile: white mark on the brand colour. */
+/** App-icon tile: the mark on ink. */
 export function LogoTile({ className }: { className?: string }) {
   return (
     <span

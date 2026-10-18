@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Toaster } from "sonner";
 import { StoreProvider } from "@/components/providers/StoreProvider";
+import { ThemedToaster } from "@/components/providers/ThemedToaster";
+import { THEME_BOOT_SCRIPT } from "@/components/theme/theme";
 import { ConfirmProvider } from "@/components/ui/ConfirmDialog";
 import "./globals.css";
 
@@ -12,8 +13,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
@@ -23,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <StoreProvider>
-          <Toaster position="top-right" closeButton richColors duration={5000} />
+          <ThemedToaster />
           <ConfirmProvider>{children}</ConfirmProvider>
         </StoreProvider>
       </body>

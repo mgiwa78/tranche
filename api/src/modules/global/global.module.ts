@@ -7,7 +7,6 @@ import { DevCheckoutController } from "./controllers/dev-checkout.controller";
 import { PaymentReturnController } from "./controllers/payment-return.controller";
 import { AuthService } from "./services/auth.service";
 
-/** Public + any-signed-in-user routes: auth, health, app config, notifications, webhooks. */
 @Module({
   controllers: [
     AuthController,

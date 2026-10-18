@@ -41,7 +41,7 @@ export class AppModule implements NestModule {
     private readonly jwtService: JwtService,
   ) {}
 
-  /** The reference's root router order: webhooks first (unlimited), then the general limiter. */
+  /** Webhooks are mounted first (no rate limit), then the general limiter. */
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(RateLimitPresets.general(this.redis, this.jwtService))

@@ -213,7 +213,7 @@ export const toWebhookEventView = (e: WebhookEvent): WebhookEventView => ({
   processedAt: toIso(e.processedAt),
 });
 
-/** Batch name lookups so list endpoints never N+1 (the reference joins in services too). */
+/** Batch name lookups so list endpoints never N+1. */
 export const loadNames = async (dataSource: DataSource, ids: { userIds?: string[]; merchantIds?: string[] }) => {
   const userIds = [...new Set(ids.userIds ?? [])];
   const merchantIds = [...new Set(ids.merchantIds ?? [])];

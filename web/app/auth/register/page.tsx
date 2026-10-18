@@ -46,8 +46,8 @@ export default function RegisterMerchantPage() {
 
   return (
     <div>
-      <h1 className="font-brand text-2xl font-medium tracking-tight text-ink">Create a merchant account</h1>
-      <p className="mb-6 mt-1 text-sm text-muted">Get paid in full upfront. Your customers pay Tranche in four.</p>
+      <h1 className="font-brand text-3xl font-semibold tracking-[-0.03em] text-ink">Create a merchant account</h1>
+      <p className="mb-8 mt-2 text-sm text-muted">Get paid in full upfront. Your customers pay Tranche in four.</p>
       <form onSubmit={submit} className="flex flex-col gap-4" noValidate>
         <Input label="Business name" autoFocus {...field("businessName")} />
         <div className="grid grid-cols-2 gap-3">
@@ -67,7 +67,7 @@ export default function RegisterMerchantPage() {
           Create account
         </Button>
       </form>
-      <p className="mt-6 text-sm text-muted">
+      <p className="mt-6 border-t border-border pt-5 text-sm text-muted">
         Already selling with Tranche?{" "}
         <Link href="/auth/login" className="focus-ring rounded-control font-medium text-accent-ink hover:underline">
           Sign in

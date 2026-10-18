@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "mgiwa78",
     "name": "Tranche",
     "slug": "tranche",
     "version": "1.0.0",
@@ -11,7 +12,9 @@
       "bundleIdentifier": "com.tranche.app",
       "supportsTablet": false,
       "infoPlist": {
-        "UIBackgroundModes": ["remote-notification"],
+        "UIBackgroundModes": [
+          "remote-notification"
+        ],
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -25,7 +28,9 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "permissions": ["android.permission.POST_NOTIFICATIONS"]
+      "permissions": [
+        "android.permission.POST_NOTIFICATIONS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -62,7 +67,15 @@
     },
     "extra": {
       "router": {},
-      "eas": {}
+      "eas": {
+        "projectId": "e0a03eb0-51b8-4f95-b352-d44ba58c88a3"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e0a03eb0-51b8-4f95-b352-d44ba58c88a3"
     }
   }
 }

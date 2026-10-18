@@ -1,4 +1,3 @@
-// Status is a colored dot plus plain text, not a filled pill.
 const dotStyles = {
   success: "bg-success",
   warning: "bg-warning",
@@ -99,12 +98,7 @@ export interface BadgeProps {
   className?: string;
 }
 
-/**
- * Pass the raw status
- * string as `children` under a domain `type`, and the component resolves
- * the human label + color from a lookup map — callers never hand-pick
- * colors per status.
- */
+/** Pass the raw status as `children` with a domain `type`; the label and colour come from the lookup maps. */
 export function Badge({ type, variant = "default", children, className }: BadgeProps) {
   const key = children?.toString().toLowerCase().trim();
   const resolved = type ? OptionTypes[type][key] : undefined;

@@ -6,10 +6,7 @@ import { RedisClient } from "./redis/client";
 import { AuditLogger } from "./monitoring/audit";
 import { HealthMonitor } from "./monitoring/health";
 
-/**
- * The reference's `config/int-services.ts` singletons (jwt, redis) as global providers,
- * plus the AuditLogger / HealthMonitor singletons initialised against Nest's DataSource.
- */
+/** jwt and redis as global providers, plus the AuditLogger / HealthMonitor singletons initialised against Nest's DataSource. */
 @Global()
 @Module({
   providers: [

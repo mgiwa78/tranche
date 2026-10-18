@@ -1,10 +1,11 @@
+import { DataSource } from "typeorm";
 import { faker } from "@faker-js/faker";
-import { MerchantStatus, ProductCategory, UserRole, toKobo } from "@tranche/shared";
-import { Merchant, Product, User } from "@/database/entities";
+import { AccountStatus, MerchantStatus, ProductCategory, UserRole } from "@tranche/shared";
+import { Merchant, User } from "@/database/entities";
 import { slugify } from "@/modules/global/services/auth.service";
-import { DEMO_PASSWORD, SeedContext, Seeder, upsertUser } from "./essential.seeder";
+import { demoPasswordHash } from "./user.seeder";
 
-interface StoreSeed {
+export interface StoreSeed {
   name: string;
   ownerEmail: string;
   status: MerchantStatus;
@@ -20,26 +21,11 @@ export const STORES: StoreSeed[] = [
     feeBps: null,
     products: [
       ["Pixel 9 Pro 256GB", 1_180_000, ProductCategory.ELECTRONICS, "Unlocked, 2 year warranty, includes 45W charger."],
-      ['MacBook Air M3 13"', 1_650_000, ProductCategory.ELECTRONICS, "8-core CPU, 16GB unified memory, 512GB SSD."],
-      [
-        "Sony WH-1000XM5",
-        420_000,
-        ProductCategory.ELECTRONICS,
-        "Industry-leading noise cancellation, 30 hour battery.",
-      ],
-      [
-        'Samsung 55" Crystal UHD TV',
-        690_000,
-        ProductCategory.ELECTRONICS,
-        "4K smart TV with Tizen and AirSlim design.",
-      ],
+      ["MacBook Air M3 13\"", 1_650_000, ProductCategory.ELECTRONICS, "8-core CPU, 16GB unified memory, 512GB SSD."],
+      ["Sony WH-1000XM5", 420_000, ProductCategory.ELECTRONICS, "Industry-leading noise cancellation, 30 hour battery."],
+      ["Samsung 55\" Crystal UHD TV", 690_000, ProductCategory.ELECTRONICS, "4K smart TV with Tizen and AirSlim design."],
       ["iPad 10th Gen 64GB", 540_000, ProductCategory.ELECTRONICS, "10.9-inch Liquid Retina display, Wi-Fi."],
-      [
-        "Anker 20,000mAh Power Bank",
-        38_500,
-        ProductCategory.ELECTRONICS,
-        "22.5W fast charging for phones and tablets.",
-      ],
+      ["Anker 20,000mAh Power Bank", 38_500, ProductCategory.ELECTRONICS, "22.5W fast charging for phones and tablets."],
       ["PlayStation 5 Slim", 820_000, ProductCategory.ELECTRONICS, "Disc edition with one DualSense controller."],
       ["Oraimo FreePods 4", 32_000, ProductCategory.ELECTRONICS, "ANC earbuds with 35 hour playback."],
     ],
@@ -64,15 +50,10 @@ export const STORES: StoreSeed[] = [
     feeBps: 400,
     products: [
       ["Three-seater Fabric Sofa", 780_000, ProductCategory.HOME, "Kiln-dried hardwood frame, stain-resistant fabric."],
-      [
-        "Inverter + 2 Batteries (3.5kVA)",
-        1_450_000,
-        ProductCategory.HOME,
-        "Pure sine wave, installation included in Lagos.",
-      ],
+      ["Inverter + 2 Batteries (3.5kVA)", 1_450_000, ProductCategory.HOME, "Pure sine wave, installation included in Lagos."],
       ["Midea 1.5HP Split AC", 465_000, ProductCategory.HOME, "Inverter compressor, 40% energy saving."],
       ["Queen Orthopaedic Mattress", 310_000, ProductCategory.HOME, "Medium-firm, 10 year guarantee."],
-      ['Standing Fan (18")', 54_000, ProductCategory.HOME, "Remote control, 3 speeds."],
+      ["Standing Fan (18\")", 54_000, ProductCategory.HOME, "Remote control, 3 speeds."],
       ["Non-stick Cookware Set", 72_000, ProductCategory.HOME, "10 pieces, induction compatible."],
     ],
   },
@@ -96,62 +77,44 @@ export const STORES: StoreSeed[] = [
   },
 ];
 
-/** Merchants, their owner logins and catalog. */
-export class CatalogSeeder implements Seeder {
-  async run({ dataSource, log }: SeedContext) {
+export const seededMerchants = (dataSource: DataSource, status: MerchantStatus = MerchantStatus.ACTIVE) =>
+  dataSource.getRepository(Merchant).find({ where: { status }, order: { name: "ASC" } });
+
+/** Stores and their owner logins (password: DEMO_PASSWORD). */
+export class MerchantSeeder {
+  public async run(dataSource: DataSource): Promise<void> {
     const merchants = dataSource.getRepository(Merchant);
-    const products = dataSource.getRepository(Product);
+    const users = dataSource.getRepository(User);
 
     for (const store of STORES) {
-      const slug = slugify(store.name);
-      let merchant = await merchants.findOne({ where: { slug } });
-      if (!merchant) {
-        merchant = await merchants.save(
-          merchants.create({
-            name: store.name,
-            slug,
-            status: store.status,
-            feeBps: store.feeBps,
-            supportEmail: store.ownerEmail,
-            settlementBankCode: "058",
-            settlementAccountNumber: faker.string.numeric(10),
-            settlementAccountName: store.name.toUpperCase(),
-          }),
-        );
-      }
-      const [firstName, ...rest] = faker.person.fullName().split(" ");
-      const owner = await upsertUser(
-        dataSource,
-        {
+      const createdAt = faker.date.past({ years: 1, refDate: faker.date.recent({ days: 170 }) });
+      const merchant = await merchants.save(
+        merchants.create({
+          name: store.name,
+          slug: slugify(store.name),
+          status: store.status,
+          feeBps: store.feeBps,
+          supportEmail: store.ownerEmail,
+          settlementBankCode: faker.helpers.arrayElement(["058", "044", "057", "033"]),
+          settlementAccountNumber: faker.string.numeric(10),
+          settlementAccountName: store.name.toUpperCase(),
+          createdAt,
+        }),
+      );
+      const owner = await users.save(
+        users.create({
           email: store.ownerEmail,
-          firstName,
-          lastName: rest.join(" ") || "Owner",
+          passwordHash: demoPasswordHash(),
+          firstName: faker.person.firstName(),
+          lastName: faker.person.lastName(),
           role: UserRole.MERCHANT,
           merchantId: merchant.id,
-        },
-        DEMO_PASSWORD,
+          status: AccountStatus.ACTIVE,
+          creditLimitKobo: 0,
+          createdAt,
+        }),
       );
       await merchants.update(merchant.id, { ownerUserId: owner.id });
-
-      for (const [name, naira, category, description] of store.products) {
-        if (await products.exists({ where: { merchantId: merchant.id, name } })) continue;
-        await products.save(
-          products.create({
-            merchantId: merchant.id,
-            name,
-            description,
-            priceKobo: toKobo(naira),
-            category,
-            imageUrl: `https://picsum.photos/seed/${slugify(name)}/800/800`,
-            stock: faker.number.int({ min: 40, max: 120 }),
-            isActive: true,
-          }),
-        );
-      }
     }
-    log(`${STORES.length} merchants, ${STORES.reduce((t, s) => t + s.products.length, 0)} products`);
   }
 }
-
-export const merchantOwners = (dataSource: SeedContext["dataSource"]) =>
-  dataSource.getRepository(User).find({ where: { role: UserRole.MERCHANT } });

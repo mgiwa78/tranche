@@ -11,10 +11,8 @@ function extractMessage(payload: unknown): string | null {
 }
 
 /**
- * Turns every RTK Query
- * rejection into a toast, so individual components don't have to. 401s are
- * swallowed here — the base query's refresh-and-redirect flow already
- * handles those, and a stray toast right before a redirect is just noise.
+ * Turns every RTK Query rejection into a toast. 401s are skipped: the base query's
+ * refresh-and-redirect flow handles those.
  */
 export const errorMiddleware: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {

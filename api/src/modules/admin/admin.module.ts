@@ -11,7 +11,6 @@ import { AdminDashboardService } from "./services/admin-dashboard.service";
 import { AdminAccountService } from "./services/admin-account.service";
 import { AdminOrderService } from "./services/admin-order.service";
 
-/** Tranche staff routes used by the web app: `/admin/*`. */
 @Module({
   controllers: [
     AdminDashboardController,

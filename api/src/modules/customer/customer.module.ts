@@ -7,7 +7,6 @@ import { CheckoutService } from "./services/checkout.service";
 import { CustomerOrderService } from "./services/customer-order.service";
 import { MaintenanceGuard } from "./maintenance.guard";
 
-/** Shopper routes used by the mobile app: `/customer/*`. */
 @Module({
   controllers: [CatalogController, OrderController, PaymentController],
   providers: [CatalogService, CheckoutService, CustomerOrderService, MaintenanceGuard],

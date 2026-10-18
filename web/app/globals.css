@@ -72,6 +72,7 @@
   --status-warning-bg: var(--status-warning-bg-light);
   --status-danger-bg: var(--status-danger-bg-light);
   --status-info-bg: var(--status-info-bg-light);
+  color-scheme: light;
 }
 
 /* Dark: the ink theme. Also applied to any subtree with .theme-dark (the marketing site). */
@@ -120,11 +121,14 @@
     --status-warning-bg: var(--status-warning-bg-dark);
     --status-danger-bg: var(--status-danger-bg-dark);
     --status-info-bg: var(--status-info-bg-dark);
+    color-scheme: dark;
   }
 }
-
-/* ---- Tailwind v4 theme bridge: utilities read the CSS vars above ---- */
-@theme {
+/* ---- Tailwind v4 theme bridge: utilities read the CSS vars above ----
+   Colours are `inline` so a utility like text-ink compiles to var(--text) and resolves on the
+   element itself. Without it the value is fixed once at :root, and a .theme-dark panel inside
+   a light page would still get light colours. */
+@theme inline {
   --color-canvas: var(--bg);
   --color-canvas-subtle: var(--bg-subtle);
   --color-surface: var(--surface);
@@ -151,7 +155,9 @@
   --color-ink-brand: #0b0b10;
   --color-lime: #c8f531;
   --color-ink0: #0D0D0D;
+}
 
+@theme {
   --radius-control: 6px;
   --radius-surface: 10px;
 
@@ -197,6 +203,16 @@ body {
 }
 
 
+
+/* Browser autofill paints its own pale-blue box over our fields. The background transition
+   never finishes, so the field keeps the surface colour, and the text keeps the theme's ink. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text);
+  caret-color: var(--text);
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
 
 ::selection {
   background: var(--accent);

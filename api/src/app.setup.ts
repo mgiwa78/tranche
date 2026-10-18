@@ -38,8 +38,8 @@ const basicAuth = (username: string, password: string) => (req: Request, res: Re
 };
 
 /**
- * Everything the reference's index.ts did before mounting routes, applied to a Nest app.
- * Shared by main.ts and the integration test harness so tests run the real pipeline.
+ * Middleware, pipes and filters applied before routes are mounted. Shared by main.ts and the
+ * integration test harness so tests run the real pipeline.
  */
 export const configureApp = (app: INestApplication, opts: { logRequests?: boolean } = {}) => {
   const express = app as NestExpressApplication;

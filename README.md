@@ -104,7 +104,7 @@ With no `PAYSTACK_SECRET_KEY`, the api uses an in-memory provider and serves a *
 |---|---|
 | `customer@tranche.ng` | Mobile app |
 | `merchant@tranche.ng` | Web, merchant dashboard |
-| `admin@tranche.ng` | Web, staff console (super admin) |
+| `admin1@tranche.ng`, `admin2@tranche.ng`, `admin3@tranche.ng` | Web, staff console (super admins, `ADMIN_EMAILS` in the admin seeder) |
 | `support@tranche.ng` | Web, staff console (read-mostly support role) |
 
 Queue dashboard (Bull Board): `http://localhost:4000/api/v1/admin/queues` (basic auth from `QUEUE_DASHBOARD_*`).
@@ -148,7 +148,7 @@ Repository settings to add:
 | Secret | `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` | web deploy (project root directory: `web`) |
 | Secret | `EXPO_TOKEN` | EAS builds |
 | Secret | `CODECOV_TOKEN` | coverage badge |
-| Variable | `API_URL`, `EAS_PROJECT_ID` | health check after deploy, Expo push |
+| Variable | `API_URL` | health check after deploy |
 
 The api deploys from [`render.yaml`](render.yaml): one Docker service running HTTP and workers, managed Postgres, and Key Value (Redis, `noeviction`). The container runs migrations on boot, and with `SEED_ON_BOOT=demo` seeds the demo data once on an empty database.
 

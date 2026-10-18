@@ -6,9 +6,8 @@ import { ADMIN_ROLE_KEY, IS_PUBLIC_KEY, ROLES_KEY } from "../decorators";
 import { ForbiddenError } from "../errors";
 
 /**
- * Global guard after JwtAuthGuard (the reference's `adminMiddleware` + `requireAdminRole`).
- * `@Roles(UserRole.MERCHANT)` gates by role; `@MinAdminRole(AdminRole.ADMIN)` adds the staff
- * hierarchy on admin routes.
+ * Runs after JwtAuthGuard. `@Roles(UserRole.MERCHANT)` gates by role; `@MinAdminRole(AdminRole.ADMIN)`
+ * adds the staff hierarchy on admin routes.
  */
 @Injectable()
 export class RolesGuard implements CanActivate {

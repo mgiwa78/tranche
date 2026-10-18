@@ -19,8 +19,8 @@ const SETTINGS_KEY = "platform";
 const CACHE_KEY = "settings:platform";
 
 /**
- * One JSON row in `platform_settings` (the reference's key/value table), cached in Redis
- * for 60s. Unknown or invalid stored values fall back to defaults field by field.
+ * One JSON row in `platform_settings`, cached in Redis for 60s. Unknown or invalid stored values
+ * fall back to defaults field by field.
  */
 @Injectable()
 export class SettingsService {

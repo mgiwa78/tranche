@@ -7,7 +7,6 @@ import { MerchantProductService } from "./services/merchant-product.service";
 import { MerchantOrderService } from "./services/merchant-order.service";
 import { MerchantProfileService } from "./services/merchant-profile.service";
 
-/** Merchant dashboard routes used by the web app: `/merchant/*`. */
 @Module({
   controllers: [ProductController, MerchantOrderController, PayoutController, ProfileController],
   providers: [MerchantProductService, MerchantOrderService, MerchantProfileService],

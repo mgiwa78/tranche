@@ -7,11 +7,7 @@ export interface PaginationProps {
   hasNext?: boolean;
 }
 
-/**
- * Two modes: with `totalPages` (users/reports), renders numbered pages.
- * Without it (audit-logs, whose API meta has no total/totalPages), falls
- * back to prev/next only, gated by `hasNext`.
- */
+/** With `totalPages`, renders numbered pages. Without it, prev/next only, gated by `hasNext`. */
 export function Pagination({ page, onPageChange, totalPages, hasNext }: PaginationProps) {
   const prevDisabled = page <= 1;
 

@@ -27,8 +27,6 @@ const logger = new Logger({ level: Config.logging.level, service: "core" });
 
 /** Paystack when a secret key is configured; otherwise the in-memory fake (dev and tests). */
 export const paymentProviderFactory = () => {
-  // The seed runner builds demo history through the real services, never against Paystack.
-  if (process.env.FORCE_FAKE_PAYMENTS === "true") return new FakePaymentProvider();
   if (Config.paystack.secretKey) return new PaystackProvider(Config.paystack.secretKey);
   if (Config.nodeEnv === "production") throw new Error("PAYSTACK_SECRET_KEY is required in production");
   logger.warn("PAYSTACK_SECRET_KEY not set - using the fake payment provider (dev checkout at /api/v1/dev/checkout)");
@@ -52,8 +50,8 @@ const SERVICES: Provider[] = [
 ];
 
 /**
- * Cross-audience domain services (the reference's `core/` folder) plus the BullMQ wiring.
- * Processors register only when this process runs workers (APP_ROLE = worker | all).
+ * Cross-audience domain services plus the BullMQ wiring. Processors register only when this
+ * process runs workers (APP_ROLE = worker | all).
  */
 @Global()
 @Module({

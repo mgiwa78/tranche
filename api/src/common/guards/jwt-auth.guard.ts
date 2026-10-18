@@ -11,9 +11,8 @@ import { requestContextStorage } from "../context/request-context";
 import { User } from "@/database/entities/user.entity";
 
 /**
- * Global guard (the reference's `authMiddleware`). Verifies the RS256 bearer token, loads the
- * user on every request so suspensions and session revocation apply immediately, and sets
- * `req.user`. Routes opt out with `@Public()`.
+ * Global guard. Verifies the RS256 bearer token, loads the user on every request so suspensions
+ * and session revocation apply immediately, and sets `req.user`. Routes opt out with `@Public()`.
  */
 @Injectable()
 export class JwtAuthGuard implements CanActivate {

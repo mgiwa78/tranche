@@ -2,7 +2,7 @@ import { AccountStatus } from "@tranche/shared";
 import type { User } from "@/database/entities/user.entity";
 import { UnauthorizedError } from "../errors";
 
-/** Copied from the reference's jwt-user.loader: suspended users and revoked sessions are rejected. */
+/** Suspended users and revoked sessions are rejected. */
 export function assertSessionUsable(user: User, issuedAtSeconds: number): void {
   if (user.status === AccountStatus.SUSPENDED) {
     throw new UnauthorizedError("Your account has been suspended. Please contact support.");

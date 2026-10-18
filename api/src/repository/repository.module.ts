@@ -18,7 +18,7 @@ import {
 
 type RepositoryClass = new (dataSource: DataSource, redis?: RedisClient) => unknown;
 
-/** The reference builds repositories with `new XRepository(dataSource, redis)`; Nest does it once here. */
+/** Repositories take `(dataSource, redis)`; Nest builds each one once here. */
 const repository = (cls: RepositoryClass): Provider => ({
   provide: cls,
   useFactory: (dataSource: DataSource, redis: RedisClient) => new cls(dataSource, redis),

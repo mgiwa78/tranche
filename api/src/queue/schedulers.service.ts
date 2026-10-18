@@ -6,8 +6,8 @@ import { Logger } from "@/common/logger";
 import { JOBS, QUEUES } from "./queue.constants";
 
 /**
- * Registers the repeatable jobs (replaces the reference's node-cron + Redis lock: BullMQ job
- * schedulers are de-duplicated in Redis, so N api instances still run each tick once).
+ * Registers the repeatable jobs. BullMQ job schedulers are de-duplicated in Redis, so N api
+ * instances still run each tick once.
  */
 @Injectable()
 export class SchedulersService implements OnApplicationBootstrap {

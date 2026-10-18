@@ -12,7 +12,7 @@ const layout = (title: string, body: string) => `
     <p style="color:#6b7280;font-size:12px;margin-top:32px">You're receiving this because you have a Tranche account.</p>
   </div>`;
 
-/** Copied from the reference (Resend, inline HTML). Without RESEND_API_KEY it only logs. */
+/** Resend with inline HTML. Without RESEND_API_KEY it only logs. */
 @Injectable()
 export class EmailService {
   private resend: Resend | null = Config.resend.apiKey ? new Resend(Config.resend.apiKey) : null;

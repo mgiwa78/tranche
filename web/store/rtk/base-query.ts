@@ -39,9 +39,8 @@ function forceLogout() {
 }
 
 /**
- * Factory generateCustomBaseQuery(prefix): one
- * base query per RTK Query domain, all sharing the same auth-header
- * injection and 401-refresh-and-retry behavior.
+ * `generateCustomBaseQuery(prefix)`: one base query per RTK Query domain, sharing the auth header
+ * and the 401 refresh-and-retry.
  */
 export function generateCustomBaseQuery(prefix: string): CustomBaseQuery {
   const rawBaseQuery = fetchBaseQuery({ baseUrl: `${API_ROOT}${prefix}`, prepareHeaders });

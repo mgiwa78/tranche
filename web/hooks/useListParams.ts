@@ -2,10 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-/**
- * The list-page state every table in the reference repeats: page/limit, filters, and a
- * search box debounced by 300ms that resets to page 1.
- */
+/** List-page state: page/limit, filters, and a search box debounced by 300ms that resets to page 1. */
 export function useListParams<F extends Record<string, string>>(filters: F, limit = 20) {
   const [searchInput, setSearchInput] = useState("");
   const [params, setParams] = useState({ search: "", page: 1, limit, ...filters });

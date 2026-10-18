@@ -43,8 +43,8 @@ export const slugify = (name: string) =>
     .slice(0, 120) || "merchant";
 
 /**
- * Email + password auth with the reference's token model: RS256 access token, rotating
- * refresh token whose jti is allow-listed in Redis (`refresh:<jti>`), revocable at logout.
+ * Email + password auth: RS256 access token and a rotating refresh token whose jti is allow-listed
+ * in Redis (`refresh:<jti>`), revocable at logout.
  */
 @Injectable()
 export class AuthService {

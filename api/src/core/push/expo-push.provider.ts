@@ -6,9 +6,8 @@ import { PushPayload, PushProvider, PushSendResult } from "./push-provider.inter
 export const PUSH_PROVIDER = Symbol("PUSH_PROVIDER");
 
 /**
- * Expo push service (replaces the reference's FcmPushProvider). Expo fans out to FCM/APNs,
- * so the app only needs an Expo push token. Tokens Expo reports as `DeviceNotRegistered`
- * are returned as invalid so the dispatcher can prune them.
+ * Expo fans out to FCM/APNs, so the app only needs an Expo push token. Tokens Expo reports as
+ * `DeviceNotRegistered` are returned as invalid so the dispatcher can prune them.
  */
 export class ExpoPushProvider implements PushProvider {
   private expo = new Expo({ accessToken: Config.expo.accessToken || undefined });

@@ -15,7 +15,7 @@ export interface NotifyInput {
 
 /**
  * Writes the in-app notification, then pushes to every device the user registered.
- * Like the reference dispatcher it never throws: a failed push must not fail a payment.
+ * Never throws: a failed push must not fail a payment.
  */
 @Injectable()
 export class NotificationDispatcher {
