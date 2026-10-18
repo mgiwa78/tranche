@@ -2,7 +2,7 @@ import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import { useCallback, useState } from 'react';
 
-import { CHECKOUT_CALLBACK_URL } from '../config/env';
+import { checkoutCallbackUrl } from '../config/env';
 import { errorMessage } from '../lib/apiError';
 import { useVerifyPaymentMutation } from '../store/rtk/customerSlice/order.service';
 import type { PaymentAttemptView, PaymentVerificationView } from '../types/api';
@@ -16,7 +16,7 @@ export type PayOutcome =
 /**
  * Finishes a payment attempt from the api. Card-on-file charges are already settled; hosted
  * checkouts open Paystack (or the dev checkout) in an auth session that returns to
- * `tranche://checkout/callback`. Either way the api verifies with Paystack before we trust it.
+ * the app's checkout callback deep link. Either way the api verifies with Paystack before we trust it.
  */
 export function usePayFlow() {
   const [verify] = useVerifyPaymentMutation();
@@ -28,7 +28,7 @@ export function usePayFlow() {
       try {
         let reference = attempt.reference;
         if (attempt.authorizationUrl) {
-          const result = await WebBrowser.openAuthSessionAsync(attempt.authorizationUrl, CHECKOUT_CALLBACK_URL);
+          const result = await WebBrowser.openAuthSessionAsync(attempt.authorizationUrl, checkoutCallbackUrl());
           if (result.type === 'success') {
             const params = Linking.parse(result.url).queryParams ?? {};
             reference = String(params.reference ?? params.trxref ?? reference);

@@ -1,23 +1,11 @@
 import "reflect-metadata";
 
-/**
- * SEED_RESET (default: true, except NODE_ENV=production where it defaults to false)
- *   true  -> drop the schema, re-run migrations, seed settings, staff, catalog, customers and
- *            a realistic order/payment/ledger history.
- *   false -> keep the data, only ensure settings, platform ledger accounts and the super admin.
- *
- * SEED_IF_EMPTY=true turns a reset into a no-op when the database already has users, so a
- * container can seed demo data on its first boot and never wipe it on later deploys.
- *
- * Demo logins (password Tranche123!): admin@tranche.ng, merchant@tranche.ng, customer@tranche.ng
- */
+
 async function main() {
   const isProduction = process.env.NODE_ENV === "production";
   let reset = process.env.SEED_RESET === undefined ? !isProduction : process.env.SEED_RESET === "true";
 
   if (reset) {
-    // Fake orders go through the real services; force the in-memory provider and inline queues
-    // before config is loaded so no real card or transfer is ever touched.
     process.env.FORCE_FAKE_PAYMENTS = "true";
     process.env.QUEUE_INLINE = "true";
     process.env.APP_ROLE = "api";

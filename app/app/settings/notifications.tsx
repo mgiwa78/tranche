@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Linking } from 'react-native';
 
-import { pushPermissionGranted } from '../../src/lib/push';
+import { pushPermissionGranted, pushSupported } from '../../src/lib/push';
 import { useAppDispatch, useAppSelector } from '../../src/store/hooks';
 import { setPushEnabled } from '../../src/store/slices/settingsSlice';
 import { ListGroup, ListRow, StackPage } from '../../src/ui';
@@ -27,7 +27,11 @@ export default function NotificationsScreen() {
           accessory={{ type: 'toggle', value: pushEnabled, onChange: (v) => dispatch(setPushEnabled(v)) }}
         />
       </ListGroup>
-      {pushEnabled && !osAllowed ? (
+      {!pushSupported ? (
+        <ListGroup footer="Push notifications need a development build on Android (Expo Go can't receive them). Reminders still appear in Activity." >
+          <ListRow label="Push unavailable in Expo Go" icon="info" />
+        </ListGroup>
+      ) : pushEnabled && !osAllowed ? (
         <ListGroup footer="Notifications are turned off for Tranche in your phone's settings.">
           <ListRow label="Open phone settings" icon="external" onPress={() => void Linking.openSettings()} />
         </ListGroup>

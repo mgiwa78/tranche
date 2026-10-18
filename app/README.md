@@ -38,9 +38,24 @@ pnpm --filter app start            # Expo dev server; press i / a, or scan with 
 
 Sign in with the seeded shopper `customer@tranche.ng` / `Tranche123!`. Without Paystack keys the api serves a test checkout page, so the whole buy, pay and verify loop works locally.
 
+## Testing on a phone with Expo Go
+
+A phone can't reach `localhost`, so use your computer's LAN IP (the one in Metro's `exp://` line):
+
+```bash
+# app/.env
+EXPO_PUBLIC_API_URL=http://<lan-ip>:4000/api/v1
+# api/.env
+APP_URL=http://<lan-ip>:4000                                  # test-checkout links open on the phone
+PAYSTACK_CALLBACK_URL=                                        # empty: return via the api's /payments/return
+APP_RETURN_URL=exp://<lan-ip>:8081/--/checkout/callback       # Expo Go's deep link (builds: tranche://checkout/callback)
+```
+
+Restart Metro with `npx expo start -c` after changing `app/.env`, and allow Node through the Windows firewall for port 4000.
+
 ## Push notifications
 
-Expo push tokens need an EAS project id. Run `eas init`, then set `EAS_PROJECT_ID` (read by `app.config.js`). Without it the app skips push registration and reminders still appear in Activity. Remote push doesn't work in Expo Go on Android; use a development build (`eas build --profile development`).
+Expo push tokens need an EAS project id. Run `eas init`, then set `EAS_PROJECT_ID` (read by `app.config.js`). Without it the app skips push registration and reminders still appear in Activity. Remote push doesn't exist in Expo Go on Android (since SDK 53), so `src/lib/push.ts` loads `expo-notifications` lazily and becomes a no-op there; use a development build (`eas build --profile development`) to test push.
 
 ## Builds
 
