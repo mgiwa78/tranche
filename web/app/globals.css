@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+/*
+  Design tokens, ported from neurapath/design/assets/tokens.css and re-branded for Tranche.
+  Neutral scale is OKLCH, navy-tinted (~258°) so grays never read as flat
+  gray. Brand-exact colors are pinned to hex, never derived.
+*/
+
+:root {
+  /* ---- Neutral scale (OKLCH, hue 258 = navy-tinted) ---- */
+  --n-0: oklch(99% 0.003 258);
+  --n-50: oklch(97.5% 0.006 258);
+  --n-100: oklch(94.5% 0.010 258);
+  --n-200: oklch(89% 0.014 258);
+  --n-300: oklch(80% 0.018 258);
+  --n-400: oklch(66% 0.022 258);
+  --n-500: oklch(53% 0.024 258);
+  --n-600: oklch(43% 0.026 258);
+  --n-700: oklch(33% 0.026 258);
+  --n-800: oklch(23% 0.024 258);
+  --n-850: oklch(19% 0.022 258);
+  --n-900: oklch(15.5% 0.020 258);
+  --n-950: oklch(11.5% 0.018 258);
+
+  /* ---- Brand-exact (pinned) ---- */
+  --brand-accent: #0F7B5B;
+  --brand-accent-hover: #0C6A4E;
+  --brand-accent-active: #095A42;
+  --brand-navy: #0A1B3D;
+  --brand-ink: #0D0D0D;
+
+  /* ---- Semantic status ---- */
+  --status-success: oklch(58% 0.14 152);
+  --status-success-bg-light: oklch(94% 0.05 152);
+  --status-success-bg-dark: oklch(27% 0.06 152);
+  --status-warning: oklch(72% 0.15 76);
+  --status-warning-bg-light: oklch(95% 0.06 76);
+  --status-warning-bg-dark: oklch(30% 0.07 76);
+  --status-danger: oklch(58% 0.20 25);
+  --status-danger-bg-light: oklch(94% 0.06 25);
+  --status-danger-bg-dark: oklch(28% 0.08 25);
+  --status-info: oklch(55% 0.17 258);
+  --status-info-bg-light: oklch(94% 0.04 258);
+  --status-info-bg-dark: oklch(28% 0.07 258);
+
+  /* ---- Motion ---- */
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 260ms;
+
+  /* ---- Light theme semantic mapping ---- */
+  --bg: var(--n-0);
+  --bg-subtle: var(--n-50);
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --border: var(--n-200);
+  --border-strong: var(--n-300);
+  --text: var(--brand-ink);
+  --text-muted: var(--n-500);
+  --text-faint: var(--n-400);
+  --accent: var(--brand-accent);
+  --accent-hover: var(--brand-accent-hover);
+  --accent-active: var(--brand-accent-active);
+  --accent-contrast: #ffffff;
+  --ring: oklch(58% 0.14 160 / 0.45);
+  --shadow-color: 258 20% 30%;
+  --status-success-bg: var(--status-success-bg-light);
+  --status-warning-bg: var(--status-warning-bg-light);
+  --status-danger-bg: var(--status-danger-bg-light);
+  --status-info-bg: var(--status-info-bg-light);
+}
+
+:root[data-theme="dark"] {
+  --bg: var(--brand-navy);
+  --bg-subtle: oklch(14% 0.03 258);
+  --surface: oklch(16.5% 0.028 258);
+  --surface-raised: oklch(19.5% 0.026 258);
+  --border: oklch(28% 0.03 258);
+  --border-strong: oklch(36% 0.03 258);
+  --text: oklch(97% 0.006 258);
+  --text-muted: var(--n-400);
+  --text-faint: var(--n-600);
+  --accent: #2BB784;
+  --accent-hover: #56CB9F;
+  --accent-active: #1E9C6E;
+  --accent-contrast: #ffffff;
+  --ring: oklch(72% 0.14 160 / 0.5);
+  --shadow-color: 258 60% 3%;
+  --status-success-bg: var(--status-success-bg-dark);
+  --status-warning-bg: var(--status-warning-bg-dark);
+  --status-danger-bg: var(--status-danger-bg-dark);
+  --status-info-bg: var(--status-info-bg-dark);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --bg: var(--brand-navy);
+    --bg-subtle: oklch(14% 0.03 258);
+    --surface: oklch(16.5% 0.028 258);
+    --surface-raised: oklch(19.5% 0.026 258);
+    --border: oklch(28% 0.03 258);
+    --border-strong: oklch(36% 0.03 258);
+    --text: oklch(97% 0.006 258);
+    --text-muted: var(--n-400);
+    --text-faint: var(--n-600);
+    --accent: #2BB784;
+    --accent-hover: #56CB9F;
+    --accent-active: #1E9C6E;
+    --ring: oklch(72% 0.14 160 / 0.5);
+    --shadow-color: 258 60% 3%;
+    --status-success-bg: var(--status-success-bg-dark);
+    --status-warning-bg: var(--status-warning-bg-dark);
+    --status-danger-bg: var(--status-danger-bg-dark);
+    --status-info-bg: var(--status-info-bg-dark);
+  }
+}
+
+/* ---- Tailwind v4 theme bridge: utilities read the CSS vars above ---- */
+@theme {
+  --color-canvas: var(--bg);
+  --color-canvas-subtle: var(--bg-subtle);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ink: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-active: var(--accent-active);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-success: var(--status-success);
+  --color-success-bg: var(--status-success-bg);
+  --color-warning: var(--status-warning);
+  --color-warning-bg: var(--status-warning-bg);
+  --color-danger: var(--status-danger);
+  --color-danger-bg: var(--status-danger-bg);
+  --color-info: var(--status-info);
+  --color-info-bg: var(--status-info-bg);
+  --color-navy: #0A1B3D;
+  --color-brand: #0F7B5B;
+  --color-ink0: #0D0D0D;
+
+  --radius-control: 6px;
+  --radius-surface: 10px;
+
+  --font-sans: "Instrument Sans", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-brand: "Outfit", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --shadow-xs: 0 1px 2px hsl(var(--shadow-color) / 0.08);
+  --shadow-sm: 0 2px 6px hsl(var(--shadow-color) / 0.10);
+  --shadow-md: 0 10px 24px hsl(var(--shadow-color) / 0.16);
+  --shadow-lg: 0 24px 48px hsl(var(--shadow-color) / 0.22);
+
+  /* Overrides Tailwind's built-in ease-out/ease-in-out with stronger,
+     more intentional curves (emil-design-eng: default CSS easings are
+     too weak to feel deliberate). */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Flat, ruled layout ---- */
+
+/* Figures in a ruled grid instead of a wall of cards: 1px gaps over a border-colored backdrop. */
+.ledger {
+  display: grid;
+  gap: 1px;
+  background: var(--border);
+  border-block: 1px solid var(--border);
+}
+.ledger > * {
+  background: var(--bg);
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* ---- Reusable interaction primitives ---- */
+
+.press {
+  transition: transform var(--dur-fast) var(--ease-out), background-color var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out), box-shadow var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+.pop-in {
+  transform-origin: var(--pop-origin, top center);
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* The card inside the dialog draws the surface; the <dialog> itself must be invisible,
+   otherwise its default white box shows as square corners behind the rounded card.
+   Overflow stays visible so dropdown menus inside dialogs aren't clipped. */
+dialog {
+  background: transparent;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  overflow: visible;
+  max-width: none;
+  max-height: none;
+}
+
+dialog::backdrop {
+  background: oklch(10% 0.02 258 / 0.55);
+  backdrop-filter: blur(2px);
+}
+dialog[open] {
+  animation: dialog-in 220ms var(--ease-out) both;
+}
+dialog[open]::backdrop {
+  animation: backdrop-in 220ms var(--ease-out) both;
+}
+@keyframes dialog-in {
+  from { opacity: 0; transform: scale(0.96) translateY(4px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Spinners are exempt: a 1ms infinite spin reads as frozen, and they carry
+   loading state rather than decoration. */
+@media (prefers-reduced-motion: reduce) {
+  .press,
+  *:not(.animate-spin) {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+}
